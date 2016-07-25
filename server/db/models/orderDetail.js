@@ -3,7 +3,7 @@
 var Sequelize = require('sequelize');
 var db = require('../_db');
 
-module.exports = db.define('orderDetail', {
+module.exports = db.define('order_detail', {
   processed: {
     type: Sequelize.BOOLEAN,
     defaultValue: false

@@ -3,7 +3,7 @@
 var Sequelize = require('sequelize');
 var db = require('../_db');
 
-module.exports = db.define('orderSummary', {
+module.exports = db.define('order_summary', {
   date: {
     type: Sequelize.DATE,
     defaultValue: Sequelize.NOW
@@ -17,6 +17,11 @@ module.exports = db.define('orderSummary', {
   },
 
   processed: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+
+  paid: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
