@@ -10,11 +10,6 @@ module.exports = db.define('product', {
 
   },
 
-  productCategoryId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-
   price: {
     type: Sequelize.DOUBLE,
     allowNull: false
@@ -23,11 +18,6 @@ module.exports = db.define('product', {
   photoUrl: {
     type: Sequelize.STRING,
     defaultValue: 'https://i.vimeocdn.com/portrait/1274237_300x300'
-  },
-
-  productBrandId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
   },
 
   inventory: {
