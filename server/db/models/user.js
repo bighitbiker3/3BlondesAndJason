@@ -7,7 +7,11 @@ var db = require('../_db');
 
 module.exports = db.define('user', {
     email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        validate: {
+            notNull: true,
+            isEmail: true
+        }
     },
     password: {
         type: Sequelize.STRING
@@ -23,7 +27,26 @@ module.exports = db.define('user', {
     },
     google_id: {
         type: Sequelize.STRING
+    },
+    firstName: {
+        type: Sequelize.STRING,
+        validate: {
+            notNull: true
+        }
+    },
+    lastName: {
+        type: Sequelize.STRING,
+        validate: {
+            notNull: true
+        }
+    },
+
+    isAdmin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
+
+
 }, {
     instanceMethods: {
         sanitize: function () {
