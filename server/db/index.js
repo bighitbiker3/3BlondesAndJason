@@ -10,6 +10,7 @@ var OrderDetail = require('./models/orderDetail');
 var ProductCategory = require('./models/productCategory');
 var Address = require('./models/address');
 var Review = require('./models/review');
+var Cart = require('./models/cart');
 
 //Associations
 OrderSummary.belongsTo(User);
@@ -25,6 +26,9 @@ Product.hasMany(Review, {as: 'ProductReviews'});
 
 Address.belongsToMany(User, {through: 'UserAddress'});
 User.belongsToMany(Address, {through: 'UserAddress'});
+
+Cart.belongsTo(User);
+Product.hasMany(Cart);
 
 OrderSummary.hasMany(OrderDetail, {as: 'OrderDetails'});
 
