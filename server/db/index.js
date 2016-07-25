@@ -13,26 +13,23 @@ var Review = require('./models/review');
 var Cart = require('./models/cart');
 
 //Associations
-OrderSummary.belongsTo(User);
 OrderSummary.belongsTo(Address);
+OrderSummary.hasMany(OrderDetail, {as: 'OrderDetails'});
 
 OrderDetail.belongsTo(Product);
 
 Product.belongsTo(ProductCategory);
-
-Review.belongsTo(User);
-
 Product.hasMany(Review, {as: 'ProductReviews'});
 
-Address.belongsToMany(User, {through: 'UserAddress'});
+User.hasMany(Review, {as: 'UserReviews'})
 User.belongsToMany(Address, {through: 'UserAddress'});
+User.hasMany(OrderSummary, {as: 'UserOrders'});
+
+Address.belongsToMany(User, {through: 'UserAddress'});
 
 Cart.belongsTo(User);
 Product.hasMany(Cart);
 
-OrderSummary.hasMany(OrderDetail, {as: 'OrderDetails'});
 
 // OrderDetail.belongsToMany(OrderSummary, {through: 'OrderRelation'});
 // OrderSummary.belongsToMany(OrderDetail, {through: 'OrderRelation'});
-
-

@@ -22,11 +22,15 @@ var db = require('./server/db');
 var User = db.model('user');
 var Product = db.model('product');
 var Address = db.model('address');
+var Review = db.model('review')
 var Promise = require('sequelize').Promise;
 var chance = new require('chance')();
 
 var postValidationUsers;
+var postValidationProducts;
+var postValidationReviews;
 
+//SEED USERS
 var seedUsers = function () {
   var newUsers = [];
 
@@ -47,6 +51,7 @@ var seedUsers = function () {
 
 };
 
+//SEED ADDRESSES
 var seedAddresses = function(){
   var newAddresses =[];
 
@@ -67,6 +72,7 @@ var seedAddresses = function(){
   return Promise.all(creatingAddresses)
 };
 
+//SEED PRODUCTS
 var seedProducts = function(){
   var newProducts = [];
 
@@ -87,13 +93,31 @@ var seedProducts = function(){
   return Promise.all(creatingProducts)
 };
 
+//SEED REVIEWS
+var seedReviews = function(){
+  var newReviews = [];
+
+  for (var i = 0; i < 400; i++) {
+    var newReview = {
+      description: chance.paragraph(),
+      stars: chance.integer({min: 0, max: 5})
+    }
+    newReviews.push(newReview)
+  }
+
+  var creatingReviews = newReviews.map(function(review){
+    return Review.create(review);
+  });
+
+  return Promise.all(creatingReviews);
+};
 
 db.sync({ force: true })
     .then(function () {
         return seedUsers();
     })
     .then(users => {
-      postValidationUsers = users;
+      postValidationUsers = users.slice();
       return seedAddresses()
     })
     .then(addresses => {
@@ -104,6 +128,27 @@ db.sync({ force: true })
     })
     .then(() => {
       return seedProducts()
+    })
+    .then(products => {
+      postValidationProducts = products.slice();
+      return seedReviews();
+    })
+    .then(reviews => {
+      postValidationReviews = reviews.slice();
+      var reviewCopy = reviews.slice();
+      var addingUsersToReviews = [];
+      reviews.forEach((review, i) => {
+        addingUsersToReviews.push(chance.pickone(postValidationUsers).addUserReviews(reviewCopy.pop()));
+      });
+      return Promise.all(addingUsersToReviews);
+    })
+    .then(() => {
+      var reviewCopy = postValidationReviews.slice();
+      var addingProductsToReviews = [];
+      postValidationReviews.forEach((review, i) => {
+        addingProductsToReviews.push(chance.pickone(postValidationProducts).addProductReviews(reviewCopy.pop()));
+      });
+      return Promise.all(addingProductsToReviews);
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));
