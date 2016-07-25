@@ -11,9 +11,8 @@ module.exports = db.define('order_summary', {
 
   priceTotal: {
     type: Sequelize.DOUBLE,
-    validate: {
-      notNull: true
-    }
+    allowNull: false
+
   },
 
   processed: {

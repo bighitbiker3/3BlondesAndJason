@@ -8,8 +8,8 @@ var db = require('../_db');
 module.exports = db.define('user', {
     email: {
         type: Sequelize.STRING,
+        allowNull: false,
         validate: {
-            notNull: true,
             isEmail: true
         }
     },
@@ -30,15 +30,12 @@ module.exports = db.define('user', {
     },
     firstName: {
         type: Sequelize.STRING,
-        validate: {
-            notNull: true
-        }
+        allowNull: false,
     },
     lastName: {
         type: Sequelize.STRING,
-        validate: {
-            notNull: true
-        }
+        allowNull: false
+
     },
 
     isAdmin: {

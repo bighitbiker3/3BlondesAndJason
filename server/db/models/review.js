@@ -11,8 +11,8 @@ module.exports = db.define('review', {
 
   stars: {
     type: Sequelize.INTEGER,
+    allowNull: false,
     validate: {
-      notNull: true,
       len: [0,5]
     }
   },
