@@ -20,8 +20,12 @@ name in the environment files.
 var chalk = require('chalk');
 var db = require('./server/db');
 var User = db.model('user');
+var Product = db.model('product');
+var Address = db.model('address');
 var Promise = require('sequelize').Promise;
 var chance = new require('chance')();
+
+var postValidationUsers;
 
 var seedUsers = function () {
   var newUsers = [];
@@ -43,11 +47,63 @@ var seedUsers = function () {
 
 };
 
+var seedAddresses = function(){
+  var newAddresses =[];
+
+  for (var i = 0; i < 100; i++) {
+    var newAddress = {
+      street1: chance.address(),
+      city: chance.city(),
+      state: chance.state(),
+      zip: chance.zip()
+    }
+    newAddresses.push(newAddress)
+  }
+
+  var creatingAddresses = newAddresses.map(function (newAddObj) {
+      return Address.create(newAddObj);
+  });
+
+  return Promise.all(creatingAddresses)
+};
+
+var seedProducts = function(){
+  var newProducts = [];
+
+  for (var i = 0; i < 100; i++) {
+    var newProduct = {
+      name: chance.word(),
+      price: chance.floating({fixed: 2, min: 0, max: 1000}),
+      inventory: chance.integer({min: 0, max: 1000}),
+      description: chance.paragraph()
+    }
+    newProducts.push(newProduct)
+  }
+
+  var creatingProducts = newProducts.map(function(product){
+    return Product.create(product)
+  });
+
+  return Promise.all(creatingProducts)
+};
 
 
 db.sync({ force: true })
     .then(function () {
         return seedUsers();
+    })
+    .then(users => {
+      postValidationUsers = users;
+      return seedAddresses()
+    })
+    .then(addresses => {
+      var userAddressArr = postValidationUsers.map(user => {
+        return user.addAddress(chance.pickone(addresses))
+      })
+      return Promise.all(userAddressArr)
+    })
+    .then(() => {
+      return seedProducts()
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));
