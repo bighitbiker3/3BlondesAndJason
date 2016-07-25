@@ -22,9 +22,12 @@ var db = require('./server/db');
 var User = db.model('user');
 var Product = db.model('product');
 var Address = db.model('address');
-var Review = db.model('review')
+var Review = db.model('review');
+var OrderSummary = db.model('orderSummary');
+
 var Promise = require('sequelize').Promise;
 var chance = new require('chance')();
+
 
 var postValidationUsers;
 var postValidationProducts;
@@ -149,6 +152,9 @@ db.sync({ force: true })
         addingProductsToReviews.push(chance.pickone(postValidationProducts).addProductReviews(reviewCopy.pop()));
       });
       return Promise.all(addingProductsToReviews);
+    })
+    .then(() => {
+      return seedOrderSummaries();
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));
