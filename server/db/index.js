@@ -14,6 +14,7 @@ var Cart = require('./models/cart');
 
 //Associations
 OrderSummary.belongsTo(Address);
+
 OrderSummary.hasMany(OrderDetail, {as: 'OrderDetails'});
 
 OrderDetail.belongsTo(Product);
