@@ -21,27 +21,29 @@ var chalk = require('chalk');
 var db = require('./server/db');
 var User = db.model('user');
 var Promise = require('sequelize').Promise;
+var chance = new require('chance')();
 
 var seedUsers = function () {
+  var newUsers = [];
 
-    var users = [
-        {
-            email: 'testing@fsa.com',
-            password: 'password'
-        },
-        {
-            email: 'obama@gmail.com',
-            password: 'potus'
-        }
-    ];
+  for (var i = 0; i < 100; i++) {
+    var newUser = {
+      email: chance.email(),
+      firstName: chance.first(),
+      lastName: chance.last(),
+      password: chance.word()
+    }
+    newUsers.push(newUser)
+  }
+  var creatingUsers = newUsers.map(function (userObj) {
+      return User.create(userObj);
+  });
 
-    var creatingUsers = users.map(function (userObj) {
-        return User.create(userObj);
-    });
-
-    return Promise.all(creatingUsers);
+  return Promise.all(creatingUsers);
 
 };
+
+
 
 db.sync({ force: true })
     .then(function () {

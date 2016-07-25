@@ -11,15 +11,11 @@ module.exports = db.define('order_detail', {
 
   purchaseCost: {
     type: Sequelize.DOUBLE,
-    validate: {
-      notNull: true
-    }
+    allowNull: false,
   },
 
   quantity: {
     type: Sequelize.INTEGER,
-    validate: {
-      notNull: true
-    }
+    allowNull: false,
   }
 })

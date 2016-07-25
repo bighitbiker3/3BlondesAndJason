@@ -6,23 +6,18 @@ var db = require('../_db');
 module.exports = db.define('product', {
   name: {
     type: Sequelize.STRING,
-    validate: {
-      notNull: true
-    }
+    allowNull: false
+
   },
 
   productCategoryId: {
     type: Sequelize.INTEGER,
-    validate: {
-      notNull: true
-    }
+    allowNull: false
   },
 
   price: {
     type: Sequelize.DOUBLE,
-    validate: {
-      notNull: true
-    }
+    allowNull: false
   },
 
   photoUrl: {
@@ -32,16 +27,12 @@ module.exports = db.define('product', {
 
   productBrandId: {
     type: Sequelize.INTEGER,
-    validate: {
-      notNull: true
-    }
+    allowNull: false
   },
 
   inventory: {
     type: Sequelize.INTEGER,
-    validate: {
-      notNull: true
-    }
+    allowNull: false
   },
 
   description: {
