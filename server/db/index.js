@@ -31,9 +31,8 @@ User.hasMany(OrderSummary, {as: 'UserOrders'});
 
 Address.belongsToMany(User, {through: 'UserAddress'});
 
-Cart.belongsTo(User);
-Product.hasMany(Cart);
-
+User.belongsTo(Cart);
+Cart.belongsToMany(Product, {through: 'CartProducts'});
 
 // OrderDetail.belongsToMany(OrderSummary, {through: 'OrderRelation'});
 // OrderSummary.belongsToMany(OrderDetail, {through: 'OrderRelation'});
