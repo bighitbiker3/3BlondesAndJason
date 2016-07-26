@@ -4,19 +4,19 @@ var db = require('../../../db');
 var User = db.model('user');
 module.exports = router;
 
-var ensureAuthenticated = function (req, res, next) {
-    if (req.isAuthenticated()) {
+var ensureAdmin = function (req, res, next) {
+    if (req.isAuthenticated() && req.user.isAdmin) {
         next();
     } else {
         res.status(401).end();
     }
 };
 
-//ROUTER PARAM FOR USERS - THIS SETS A REQ.USER OBJECT WITH THE USER WHEN AN ID PARAM IS PASSED IN THE REQUEST
+//ROUTER PARAM FOR USERS - THIS SETS A REQ.FOUNDUSER OBJECT WITH THE USER WHEN AN ID PARAM IS PASSED IN THE REQUEST
 router.param('id', function(req, res, next, id){
   User.findById(id)
-  .then(user => {
-    req.user = user
+  .then(foundUser => {
+    req.foundUser = foundUser
     next();
     return null
   })
@@ -24,8 +24,7 @@ router.param('id', function(req, res, next, id){
 })
 
 //GET ALL USERS
-router.get('/', ensureAuthenticated, function(req, res, next){
-
+router.get('/', ensureAdmin, function(req, res, next){
   User.findAll()
   .then(users => {
     res.send(users);
@@ -33,7 +32,7 @@ router.get('/', ensureAuthenticated, function(req, res, next){
 });
 
 //ADD USER
-router.post('/', ensureAuthenticated, function(req, res, next){
+router.post('/', ensureAdmin, function(req, res, next){
   let newUser = req.body;
   User.create(newUser)
   .then(createdUser => {
@@ -43,7 +42,7 @@ router.post('/', ensureAuthenticated, function(req, res, next){
 });
 
 //UPDATE USER
-router.put('/:id', ensureAuthenticated, function(req, res, next){
+router.put('/:id', ensureAdmin, function(req, res, next){
   let userUpdateData = req.body;
 
   req.user.update(userUpdateData)
@@ -54,7 +53,7 @@ router.put('/:id', ensureAuthenticated, function(req, res, next){
 });
 
 //DELETE USER
-router.delete('/:id', ensureAuthenticated, function(req, res, next){
+router.delete('/:id', ensureAdmin, function(req, res, next){
   req.user.destroy()
   .then(() => {
     res.sendStatus(204);
@@ -63,6 +62,6 @@ router.delete('/:id', ensureAuthenticated, function(req, res, next){
 });
 
 //GET SPECIFIC USER
-router.get('/:id', ensureAuthenticated, function(req, res, next){
+router.get('/:id', ensureAdmin, function(req, res, next){
   res.send(req.user)
 });
