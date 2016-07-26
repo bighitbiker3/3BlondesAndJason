@@ -14,7 +14,7 @@ var ensureAuthenticated = function (req, res, next) {
 };
 
 var ensureAdmin = function (req, res, next) {
-    if (req.user.isAdmin) {
+    if (req.user.isAdmin && req.isAuthenticated()) {
         next();
     } else {
         res.status(401).end();
@@ -34,7 +34,7 @@ router.param('orderSummaryId', function(req, res, next, id){
 })
 
 // Admin Level: Gets all orderSummarys
-router.get('/', ensureAuthenticated, ensureAdmin, function(req, res, next){
+router.get('/', ensureAdmin, function(req, res, next){
   OrderSummary.findAll({
     where: req.query
   })
@@ -105,7 +105,7 @@ router.param('orderDetailId', function(req, res, next, id){
 })
 
 // Admin Level: Gets all orderDetails
-router.get('/', ensureAuthenticated, ensureAdmin, function(req, res, next){
+router.get('/', ensureAdmin, function(req, res, next){
   OrderDetail.findAll({
     where: req.query
   })
