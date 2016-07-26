@@ -32,7 +32,7 @@ router.get('/', ensureAdmin, function(req, res, next){
 });
 
 //ADD USER
-router.post('/', ensureAdmin, function(req, res, next){
+router.post('/', function(req, res, next){
   let newUser = req.body;
   User.create(newUser)
   .then(createdUser => {
