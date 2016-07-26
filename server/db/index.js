@@ -19,7 +19,10 @@ OrderSummary.hasMany(OrderDetail, {as: 'OrderDetails'});
 
 OrderDetail.belongsTo(Product);
 
-Product.belongsTo(Category);
+//Product.belongsTo(Category);
+Product.belongsToMany(Category, {through: 'ProductCategory'});
+Category.belongsToMany(Product, {through: 'ProductCategory'});
+
 Product.hasMany(Review, {as: 'ProductReviews'});
 
 User.hasMany(Review, {as: 'UserReviews'})

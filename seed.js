@@ -87,6 +87,7 @@ var seedProducts = function(){
     var newProduct = {
       name: chance.word(),
       price: chance.floating({fixed: 2, min: 0, max: 1000}),
+      color: chance.color({format: 'hex'}),
       inventory: chance.integer({min: 0, max: 1000}),
       description: chance.paragraph()
     }
