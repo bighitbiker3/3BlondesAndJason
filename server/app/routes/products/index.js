@@ -13,6 +13,15 @@ var ensureAuthenticated = function (req, res, next) {
     }
 };
 
+var ensureAdmin = function (req, res, next) {
+    if (req.user.isAdmin) {
+        next();
+    } else {
+        res.status(401).end();
+    }
+};
+
+
 // Binds product to req.product for later use
 router.param('productId', function(req, res, next, id){
   Product.findById(id)
@@ -36,7 +45,7 @@ router.get('/', function(req, res, next){
 });
 
 // Admin Level: Posts a new product
-router.post('/', ensureAuthenticated, function(req, res, next){
+router.post('/', ensureAuthenticated, ensureAdmin, function(req, res, next){
   Product.create(req.body)
   .then(product => {
     res.status(201).json(product);
@@ -50,7 +59,7 @@ router.get('/:productId', function(req, res, next){
 });
 
 // Admin Level: Update a specific product
-router.put('/:productId', ensureAuthenticated, function(req, res, next){
+router.put('/:productId', ensureAuthenticated, ensureAdmin, function(req, res, next){
   req.product.update(req.body)
   .then(product => {
     res.status(201).json(product);
@@ -59,7 +68,7 @@ router.put('/:productId', ensureAuthenticated, function(req, res, next){
 });
 
 // Admin Level: Delete a specific product
-router.delete('/:id', ensureAuthenticated, function(req, res, next){
+router.delete('/:id', ensureAuthenticated, ensureAdmin, function(req, res, next){
   req.product.destroy()
   .then(() => {
     res.status(204).end();
