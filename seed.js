@@ -230,7 +230,7 @@ db.sync({ force: true })
       var addOrderDetailsToOrderSummaries = [];
 
       orderDetails.forEach(orderDetail => {
-        addOrderDetailsToOrderSummaries.push(chance.pickone(postValidationOrderSummaries).addOrderDetails(orderDetailsCopy.pop()))
+        addOrderDetailsToOrderSummaries.push(chance.pickone(postValidationOrderSummaries).addOrderDetailsFromSummary(orderDetailsCopy.pop()))
       })
 
       return Promise.all(addOrderDetailsToOrderSummaries);
