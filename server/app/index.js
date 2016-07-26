@@ -44,4 +44,3 @@ module.exports = function (db) {
     return app;
 
 };
-
