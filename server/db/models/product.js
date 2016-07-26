@@ -27,9 +27,11 @@ module.exports = db.define('product', {
 
   description: {
     type: Sequelize.TEXT
+  },
+
+  color: {
+    type: Sequelize.STRING
   }
-
-
 
 
 });
