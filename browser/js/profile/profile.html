@@ -1,0 +1,13 @@
+<section>
+  <h1>Hello {{ me.firstName }} {{ me.lastName }}</h1>
+  <div class="col-md-3">
+    <ul>
+      <li><a ui-sref="myOrders">My Orders</a></li>
+      <li><a ui-sref="myAddresses">My Addresses</a></li>
+      <li><a ui-sref="myPayments">My Payments</a></li>
+    </ul>
+  </div>
+  <div class="col-md-9">
+    <div ui-view></div>
+  </div>
+</section>
