@@ -114,6 +114,7 @@ router.post('/cart/:productId', ensureAuthenticated, function(req, res, next){
   });
 })
 
+//UPDATE CART ITEM QUANTITY
 router.put('/cart/:productId', ensureAuthenticated, function(req, res, next){
   let productIdToUpdate = req.params.productId;
   let quantity = parseInt(req.body.quantity);
@@ -136,6 +137,8 @@ router.put('/cart/:productId', ensureAuthenticated, function(req, res, next){
   .catch(next)
 })
 
+
+//DELETE ITEM IN CART
 router.delete('/cart/:productId', ensureAuthenticated, function(req, res, next){
   let productIdToAdd = req.params.productId;
 
