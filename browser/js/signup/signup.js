@@ -16,8 +16,8 @@ app.controller('signUpCtrl', function($scope, signupFactory, AuthService, $state
     if($scope.signupForm.$error.email) $scope.error = 'Please enter a valid email';
     else if($scope.signupForm.$error.minlength) $scope.error = 'Password must be at least 8 characters';
     else if($scope.signupForm.$error.maxlength) $scope.error = 'Password must be less than 32 characters';
+    else if($scope.signupForm.$error.required) $scope.error = 'All fields are required';
     else {
-      console.log($scope.signupForm);
       signupFactory.signup(signupInfo)
       .then(function(user){
         //log user in if the signup was successful
@@ -30,7 +30,7 @@ app.controller('signUpCtrl', function($scope, signupFactory, AuthService, $state
       });
     };
   };
-  
+
 })
 
 app.factory('signupFactory', function($http){
