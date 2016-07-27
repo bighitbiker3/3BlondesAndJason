@@ -1,7 +1,7 @@
 'use strict';
 
 app.factory('Product', function ($http) {
-  
+
 	var ProductFactory = {};
 
 	ProductFactory.url = '/api/products/'
@@ -16,7 +16,7 @@ app.factory('Product', function ($http) {
 		.then(res => res.data)
 	}
 
-	return ProductFactory
+	return ProductFactory;
 })
 
 
