@@ -11,6 +11,7 @@ var Category = require('./models/category');
 var Address = require('./models/address');
 var Review = require('./models/review');
 var Cart = require('./models/cart');
+var CartProducts = require('./models/cartProducts');
 
 //Associations
 OrderSummary.belongsTo(Address);
@@ -32,7 +33,4 @@ User.hasMany(OrderSummary, {as: 'UserOrders'});
 Address.belongsToMany(User, {through: 'UserAddress'});
 
 User.belongsTo(Cart);
-Cart.belongsToMany(Product, {through: 'CartProducts'});
-
-// OrderDetail.belongsToMany(OrderSummary, {through: 'OrderRelation'});
-// OrderSummary.belongsToMany(OrderDetail, {through: 'OrderRelation'});
+Cart.belongsToMany(Product, {through: CartProducts});
