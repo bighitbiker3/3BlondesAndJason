@@ -35,7 +35,6 @@ app.controller('ProductListCtrl', function ($scope, products, Product) {
   }
 
   $scope.changeFilter = function(property, query, theCheck){
-  	console.log('scope', $scope[theCheck]);
   	if($scope[theCheck]){
   		$scope.addToFilter(property, query);
   	} else {
