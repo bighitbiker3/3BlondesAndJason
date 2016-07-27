@@ -1,0 +1,10 @@
+<section>
+  <div id="filterBar" class="col-md-3">
+    <h1>hello there</h1>
+  </div>
+  <div id="allItems" class="col-md-9">
+    <div class="row">
+      <product-list ng-repeat="product in products" model="product" ui-sref="product({id: product.id})"></product-list>
+    </div>
+  </div>
+</section>

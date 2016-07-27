@@ -8,12 +8,17 @@ app.factory('Product', function ($http) {
 
 	ProductFactory.getAll = function() {
 		return $http.get(ProductFactory.url)
-		.then(res => res.data)
+		.then(res => {
+      return res.data
+    });
 	}
 
 	ProductFactory.getOne = function(id) {
 		return $http.get(ProductFactory.url + id)
-		.then(res => res.data)
+		.then(res => {
+
+      return res.data;
+    })
 	}
 
 	return ProductFactory;
