@@ -45,7 +45,7 @@ router.post('/', function(req, res, next){
 router.put('/:id', ensureAdmin, function(req, res, next){
   let userUpdateData = req.body;
 
-  req.user.update(userUpdateData)
+  req.foundUser.update(userUpdateData)
   .then(updatedUser => {
     res.status(201).send(updatedUser);
   })
@@ -54,7 +54,7 @@ router.put('/:id', ensureAdmin, function(req, res, next){
 
 //DELETE USER
 router.delete('/:id', ensureAdmin, function(req, res, next){
-  req.user.destroy()
+  req.foundUser.destroy()
   .then(() => {
     res.sendStatus(204);
   })
@@ -63,5 +63,5 @@ router.delete('/:id', ensureAdmin, function(req, res, next){
 
 //GET SPECIFIC USER
 router.get('/:id', ensureAdmin, function(req, res, next){
-  res.send(req.user)
+  res.send(req.foundUser)
 });

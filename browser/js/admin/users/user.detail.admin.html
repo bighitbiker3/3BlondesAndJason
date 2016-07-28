@@ -1,0 +1,20 @@
+<section>
+
+<form id="edit-user-form" novalidate name="editUserForm" ng-submit="saveChanges(user)">
+
+    <alert type="danger" ng-show="error">
+        {{ error }}
+    </alert>
+
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input name="firstName" type="text" ng-model="user.firstName" require class="form-control" value="{{user.firstName}}">
+        <label for="lastName">Last Name</label>
+        <input name="lastName" type="text" ng-model="user.lastName" require class="form-control" value="{{user.lastName}}">
+        <label for="email">Email</label>
+        <input name="email" type="email" ng-model="user.email" require class="form-control" value="{{user.email}}">
+
+    </div>
+
+    <button type="submit" class="btn btn-default">Save</button>
+  </form>
