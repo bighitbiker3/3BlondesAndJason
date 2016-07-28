@@ -13,7 +13,7 @@ module.exports = db.define('review', {
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-      len: [0,5]
+      len: [0,5] // OB/BG: <3 maybe [1,5]
     }
   },
 

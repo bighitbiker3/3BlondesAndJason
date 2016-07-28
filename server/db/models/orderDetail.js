@@ -3,6 +3,7 @@
 var Sequelize = require('sequelize');
 var db = require('../_db');
 
+// OB/BG: consider validations
 module.exports = db.define('order_detail', {
   processed: {
     type: Sequelize.BOOLEAN,
@@ -10,7 +11,7 @@ module.exports = db.define('order_detail', {
   },
 
   purchaseCost: {
-    type: Sequelize.DOUBLE,
+    type: Sequelize.DOUBLE, // OB/BG: recommend INTEGER instead, measure in cents
     allowNull: false,
   },
 
