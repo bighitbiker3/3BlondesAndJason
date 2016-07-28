@@ -24,6 +24,7 @@ app.controller('adminProductDetailCtrl', function($scope, Product, $stateParams)
   .catch(error => console.error(error))
 
   $scope.saveChanges = function(formData){
-    console.log(formData);
+    Product.editOne(productId, formData)
+    .then(updatedProduct => console.log(updatedProduct))
   }
 })

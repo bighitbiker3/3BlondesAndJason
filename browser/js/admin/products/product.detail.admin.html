@@ -10,13 +10,16 @@
         <label for="name">Name</label>
         <input name="name" type="text" ng-model="product.name" require class="form-control" value="{{product.name}}">
         <label for="price">Price</label>
-        <input name="price" type="text" ng-model="product.price" require class="form-control" value="{{product.price}}">
+        <input name="price" type="number" ng-model="product.price" require class="form-control" value="{{product.price}}">
         <label for="inventory">inventory</label>
-        <input name="inventory" type="text" ng-model="product.inventory" require class="form-control" value="{{product.inventory}}">
+        <input name="inventory" type="number" ng-model="product.inventory" require class="form-control" value="{{product.inventory}}">
         <label for="description">Description</label>
         <textarea name="description" type="text" ng-model="product.description" require class="form-control" value="{{product.description}}"></textarea>
         <label for="color">Color</label>
         <input name="color" type="text" ng-model="product.color" require class="form-control" value="{{product.color}}">
+        <pre>
+          {{product | json}}
+        </pre>
 
     </div>
 
