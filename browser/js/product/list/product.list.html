@@ -17,10 +17,7 @@
     </ul>
   </div>
   <div id="allItems" class="col-md-9">
-    <div class="row">
-      <product-list ng-repeat="product in products" model="product" ui-sref="product({id: product.id})">
-        <product-button></product-button>
+      <product-list ng-repeat="product in products" model="product">
       </product-list>
-    </div>
   </div>
 </section>
