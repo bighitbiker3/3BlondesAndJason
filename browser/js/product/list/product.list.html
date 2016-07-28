@@ -6,19 +6,17 @@
 
     	<p>
     	<input ng-change="changeFilter('price', 'price[$lt]=200', 'priceChecked')" ng-model="priceChecked" ng-init="priceChecked=false" type="checkbox"> Under $200</p>
-    	
+
     	</li>
     	<li>
     	<h3>Inventory</h3>
 
     	<p><input ng-change="changeFilter('inventory', 'inventory[$gt]=500', 'inventoryChecked')" ng-model="inventoryChecked" ng-init="inventoryChecked=false" type="checkbox"> Greater than 500</p>
-    	
+
     	</li>
     </ul>
   </div>
   <div id="allItems" class="col-md-9">
-    <div class="row">
       <product-list ng-repeat="product in products" model="product" ui-sref="product({id: product.id})"></product-list>
-    </div>
   </div>
 </section>
