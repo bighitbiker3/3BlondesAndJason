@@ -72,6 +72,17 @@ router.get('/addresses', ensureAuthenticated, function(req, res, next) {
   .catch(next)
 })
 
+//POST ADDRESS FOR USER
+router.post('/addresses', ensureAuthenticated, function(req, res, next) {
+  userInstance.createAddress(req.body)
+  .then(address => {
+    console.log(address);
+    if(!address) throw new Error('not created!');
+    res.status(201).send(address)
+  })
+  .catch(next);
+})
+
 //GET CART
 router.get('/cart', ensureAuthenticated, function(req, res, next){
   console.log('route hit');
