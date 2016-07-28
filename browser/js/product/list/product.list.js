@@ -1,17 +1,10 @@
-app.controller('ProductListCtrl', function ($scope, products, Product) {
+app.controller('ProductListCtrl', function ($scope, products, Product, Utility) {
   $scope.products = products;
   $scope.filterObj = {};
 
   $scope.addToFilter = function(property, query){
   	$scope.filterObj[property] = query;
-  	var superQuery = [];
-  	for (var key in $scope.filterObj) {
-  		if($scope.filterObj.hasOwnProperty(key)){
-  			superQuery.push($scope.filterObj[key]);
-  		}
-  	}
-  	superQuery = '?' + superQuery.join('&');
-
+  	var superQuery = Utility.convertToQuery($scope.filterObj);
   	Product.getAll(superQuery)
   	.then(products => {
   		$scope.products = products;
@@ -20,14 +13,7 @@ app.controller('ProductListCtrl', function ($scope, products, Product) {
 
   $scope.removeFromFilter = function(property){
   	delete $scope.filterObj[property];
-  	var superQuery = [];
-  	for (var key in $scope.filterObj) {
-  		if($scope.filterObj.hasOwnProperty(key)){
-  			superQuery.push($scope.filterObj[key]);
-  		}
-  	}
-  	superQuery = '?' + superQuery.join('&');
-
+  	var superQuery = Utility.convertToQuery($scope.filterObj);
   	Product.getAll(superQuery)
   	.then(products => {
   		$scope.products = products;
