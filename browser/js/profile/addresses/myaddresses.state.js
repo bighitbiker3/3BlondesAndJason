@@ -1,6 +1,6 @@
 app.config(function ($stateProvider) {
   $stateProvider.state('profile.addresses', {
-    url: '/profile/addresses',
+    url: '/addresses',
     templateUrl: 'js/profile/addresses/myaddresses.html',
     controller: 'ProfileAddressCtrl',
     resolve: {
