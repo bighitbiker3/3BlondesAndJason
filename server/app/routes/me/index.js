@@ -73,13 +73,13 @@ router.get('/addresses', ensureAuthenticated, function(req, res, next) {
 })
 
 //GET CART
-router.get('/cart', ensureAuthenticated, function(req, res, next){
-  console.log('route hit');
+router.get('/cart', function(req, res, next){
   userInstance.getCart()
   .then(cart => {
     return cart.getProducts()
   })
   .then(products => {
+    console.log(products);
     res.send(products)
   })
   .catch(next)
