@@ -1,0 +1,17 @@
+<section>
+<admin-nav></admin-nav>
+<form id="edit-product-form" novalidate name="editProductForm" ng-submit="">
+
+    <!-- <alert type="danger" ng-show="error">
+        {{ error }}
+    </alert> -->
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input name="name" type="email" ng-model="product.email" require class="form-control" value="{{product.name}}">
+    </div>
+
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
+</section>
