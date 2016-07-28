@@ -3,15 +3,10 @@ var router = require('express').Router();
 var db = require('../../../db');
 var User = db.model('user');
 var Cart = db.model('cart');
+var utility = require('../../configure/utility');
+var ensureAdmin = utility.ensureAdmin;
+var ensureAuthenticated = utility.ensureAuthenticated;
 module.exports = router;
-
-var ensureAdmin = function (req, res, next) {
-    if (req.isAuthenticated() && req.user.isAdmin) {
-        next();
-    } else {
-        res.status(401).end();
-    }
-};
 
 //ROUTER PARAM FOR USERS - THIS SETS A REQ.FOUNDUSER OBJECT WITH THE USER WHEN AN ID PARAM IS PASSED IN THE REQUEST
 router.param('id', function(req, res, next, id){

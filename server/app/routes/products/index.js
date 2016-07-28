@@ -2,24 +2,10 @@
 var router = require('express').Router();
 var db = require('../../../db');
 var Product = db.model('product');
-
+var utility = require('../../configure/utility');
+var ensureAdmin = utility.ensureAdmin;
+var ensureAuthenticated = utility.ensureAuthenticated;
 module.exports = router;
-
-var ensureAuthenticated = function (req, res, next) {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.status(401).end();
-    }
-};
-
-var ensureAdmin = function (req, res, next) {
-    if (req.user.isAdmin && req.isAuthenticated()) {
-        next();
-    } else {
-        res.status(401).end();
-    }
-};
 
 
 // Binds product to req.product for later use

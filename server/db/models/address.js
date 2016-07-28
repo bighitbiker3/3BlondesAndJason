@@ -20,18 +20,10 @@ module.exports = db.define('address', {
     allowNull: false
   },
   zip: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false,
     validate: {
       len: [5, 5]
     }
-  },
-  isShipping: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
-  },
-  isBilling: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
   }
 })

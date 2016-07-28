@@ -10,7 +10,7 @@ module.exports = db.define('order_detail', {
   },
 
   purchaseCost: {
-    type: Sequelize.DOUBLE,
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
 

@@ -44,7 +44,7 @@ app.controller('ProductListCtrl', function ($scope, products, Product) {
 
   //add product using the productlistfactory, passing in the selected product on the $scope
   $scope.addProduct = function(product) {
-  	return ProductListFactory.addProduct($scope.)
+  	// return ProductListFactory.addProduct($scope.)
   }
 
 

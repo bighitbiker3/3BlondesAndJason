@@ -193,7 +193,7 @@ db.sync({ force: true })
       var reviewCopy = postValidationReviews.slice();
       var addingProductsToReviews = [];
       postValidationReviews.forEach((review, i) => {
-        addingProductsToReviews.push(chance.pickone(postValidationProducts).addProductReviews(reviewCopy.pop()));
+        addingProductsToReviews.push(chance.pickone(postValidationProducts).addReviews(reviewCopy.pop()));
       });
       return Promise.all(addingProductsToReviews);
     })
@@ -217,7 +217,7 @@ db.sync({ force: true })
       var addAddressesToOrderSummaries = [];
 
       postValidationOrderSummaries.forEach(orderSummary => {
-        addAddressesToOrderSummaries.push(orderSummary.setAddress(chance.pickone(postValidationAddresses)));
+        addAddressesToOrderSummaries.push(orderSummary.setShipping(chance.pickone(postValidationAddresses)));
       })
 
       return Promise.all(addAddressesToOrderSummaries);
@@ -232,7 +232,7 @@ db.sync({ force: true })
       var addOrderDetailsToOrderSummaries = [];
 
       orderDetails.forEach(orderDetail => {
-        addOrderDetailsToOrderSummaries.push(chance.pickone(postValidationOrderSummaries).addOrderDetailsFromSummary(orderDetailsCopy.pop()))
+        addOrderDetailsToOrderSummaries.push(chance.pickone(postValidationOrderSummaries).addItems(orderDetailsCopy.pop()))
       })
 
       return Promise.all(addOrderDetailsToOrderSummaries);

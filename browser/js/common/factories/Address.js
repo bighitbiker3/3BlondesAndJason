@@ -6,8 +6,8 @@ app.factory('Address', function ($http) {
       return $http.get('/api/me/addresses')
       .then(res => res.data);
     },
-    createNewAddress: function(address){
-      return $http.post('/api/me/addresses', address)
+    createNewAddress: function(information){
+      return $http.post('/api/me/addresses', information)
       .then(res => res.data);
     }
   }

@@ -10,7 +10,7 @@ module.exports = db.define('order_summary', {
   },
 
   priceTotal: {
-    type: Sequelize.DOUBLE,
+    type: Sequelize.INTEGER,
     allowNull: false
 
   },

@@ -3,22 +3,17 @@ var router = require('express').Router();
 var db = require('../../../db');
 var User = db.model('user');
 var CartProducts = db.model('cart_products');
-var userInstance;
+var UserAddresses = db.model('user_addresses');
+var utility = require('../../configure/utility');
+var ensureAdmin = utility.ensureAdmin;
+var ensureAuthenticated = utility.ensureAuthenticated;
 module.exports = router;
-
-var ensureAuthenticated = function (req, res, next) {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.status(401).end();
-    }
-};
 
 //MIDDLEWARE FUNCTION TO GET A USER INSTANCE
 router.use('/', ensureAuthenticated, function(req, res, next){
   User.findById(req.user.id)
   .then(user => {
-    userInstance = user;
+    req.dbUser = user;
     next()
   })
   .catch(next)
@@ -27,18 +22,13 @@ router.use('/', ensureAuthenticated, function(req, res, next){
 //GET JUST THE USER DATA
 router.get('/', ensureAuthenticated, function(req, res, next) {
   //Remake user object to remove password etc...
-  var userToSend = {
-    id: req.user.id,
-    email: req.user.email,
-    firstName: req.user.firstName,
-    lastName: req.user.lastName
-  };
+  var userToSend = req.dbUser.sanitize();
   res.send(userToSend)
 });
 
 //GET ALL THE ORDER SUMMARIES
 router.get('/orders', ensureAuthenticated, function(req, res, next) {
-  userInstance.getUserOrders()
+  req.dbUser.getUserOrders()
   .then(orders => {
     res.send(orders)
   })
@@ -48,7 +38,7 @@ router.get('/orders', ensureAuthenticated, function(req, res, next) {
 //GET THE ORDER DETAILS OF A SPECIFIC ORDER SUMMARY
 router.get('/orders/:id', ensureAuthenticated, function(req, res, next) {
   let orderId = req.params.id
-  userInstance.getUserOrders({
+  req.dbUser.getUserOrders({
     where: {
       id: orderId
     }
@@ -65,7 +55,7 @@ router.get('/orders/:id', ensureAuthenticated, function(req, res, next) {
 
 //GET ADDRESSES FOR USER
 router.get('/addresses', ensureAuthenticated, function(req, res, next) {
-  userInstance.getAddresses()
+  req.dbUser.getAddresses()
   .then(addresses => {
     res.send(addresses);
   })
@@ -74,18 +64,28 @@ router.get('/addresses', ensureAuthenticated, function(req, res, next) {
 
 //POST ADDRESS FOR USER
 router.post('/addresses', ensureAuthenticated, function(req, res, next) {
-  userInstance.createAddress(req.body)
+  req.dbUser.createAddress(req.body.newAddress)
   .then(address => {
-    console.log(address);
     if(!address) throw new Error('not created!');
-    res.status(201).send(address)
+    return UserAddresses.findOne({
+      where: {
+        addressId: address.id,
+        userId: req.dbUser.id
+      }
+    })
+  })
+  .then(rowInstance => {
+    return rowInstance.update(req.body.options)
+  })
+  .then(() => {
+    res.status(201).send(req.body.newAddress);
   })
   .catch(next);
 })
 
 //GET CART
 router.get('/cart', function(req, res, next){
-  userInstance.getCart()
+  req.dbUser.getCart()
   .then(cart => {
     return cart.getProducts()
   })
@@ -101,7 +101,7 @@ router.post('/cart/:productId', ensureAuthenticated, function(req, res, next){
   let productIdToAdd = req.params.productId;
   let quantity = parseInt(req.body.quantity);
 
-  userInstance.getCart()
+  req.dbUser.getCart()
   .then(cart => {
     CartProducts.findOrCreate({
         where: {
@@ -115,11 +115,13 @@ router.post('/cart/:productId', ensureAuthenticated, function(req, res, next){
       .spread((record, created) => {
         if(!created){
           let newQuantity = record.quantity + quantity;
-          record.update({quantity: newQuantity})
-          .then(record => res.send(record))
+          return record.update({quantity: newQuantity});
         } else {
-          res.send(record)
+          return record
         }
+      })
+      .then(record => {
+        res.send(record)
       })
       .catch(next)
   });
@@ -130,7 +132,7 @@ router.put('/cart/:productId', ensureAuthenticated, function(req, res, next){
   let productIdToUpdate = req.params.productId;
   let quantity = parseInt(req.body.quantity);
 
-  userInstance.getCart()
+  req.dbUser.getCart()
   .then(cart => {
     return CartProducts.findOne({
       where: {
@@ -153,7 +155,7 @@ router.put('/cart/:productId', ensureAuthenticated, function(req, res, next){
 router.delete('/cart/:productId', ensureAuthenticated, function(req, res, next){
   let productIdToAdd = req.params.productId;
 
-  userInstance.getCart()
+  req.dbUser.getCart()
   .then(cart => {
     return cart.removeProduct(productIdToAdd)
   })

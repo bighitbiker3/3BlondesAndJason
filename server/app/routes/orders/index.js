@@ -3,23 +3,11 @@ var router = require('express').Router();
 var db = require('../../../db');
 var OrderDetail = db.model('order_detail');
 var OrderSummary = db.model('order_summary');
+var utility = require('../../configure/utility');
+var ensureAdmin = utility.ensureAdmin;
+var ensureAuthenticated = utility.ensureAuthenticated;
 module.exports = router;
 
-var ensureAuthenticated = function (req, res, next) {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.status(401).end();
-    }
-};
-
-var ensureAdmin = function (req, res, next) {
-    if (req.user.isAdmin && req.isAuthenticated()) {
-        next();
-    } else {
-        res.status(401).end();
-    }
-};
 
 // Binds orderSummary to req.orderSummary for later use
 router.param('orderSummaryId', function(req, res, next, id){
