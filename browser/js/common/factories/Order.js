@@ -11,7 +11,7 @@ app.factory('Order', function ($http) {
       .then(res => res.data);
     },
     getMyOrderDetails: function(orderSummaryId){
-      return $http.get('/api/orders/' + orderSummaryId)
+      return $http.get('/api/me/orders/' + orderSummaryId)
       .then(res => res.data);
     }
   }
