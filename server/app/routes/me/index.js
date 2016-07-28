@@ -3,9 +3,10 @@ var router = require('express').Router();
 var db = require('../../../db');
 var User = db.model('user');
 var CartProducts = db.model('cart_products');
-var userInstance;
+var userInstance; // OB/BG: watch out for async stuff
 module.exports = router;
 
+// OB/BG: reused code, move to utility internal module
 var ensureAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) {
         next();
@@ -18,7 +19,7 @@ var ensureAuthenticated = function (req, res, next) {
 router.use('/', ensureAuthenticated, function(req, res, next){
   User.findById(req.user.id)
   .then(user => {
-    userInstance = user;
+    userInstance = user; // OB/BG: req.targetUser = user;
     next()
   })
   .catch(next)
@@ -27,7 +28,7 @@ router.use('/', ensureAuthenticated, function(req, res, next){
 //GET JUST THE USER DATA
 router.get('/', ensureAuthenticated, function(req, res, next) {
   //Remake user object to remove password etc...
-  var userToSend = {
+  var userToSend = { // OB/BG: check out .sanitize method
     id: req.user.id,
     email: req.user.email,
     firstName: req.user.firstName,
@@ -46,6 +47,7 @@ router.get('/orders', ensureAuthenticated, function(req, res, next) {
 })
 
 //GET THE ORDER DETAILS OF A SPECIFIC ORDER SUMMARY
+// OB/BG: could probably remove this (and use the /api/orders/:id route instead from the client)
 router.get('/orders/:id', ensureAuthenticated, function(req, res, next) {
   let orderId = req.params.id
   userInstance.getUserOrders({
@@ -73,10 +75,11 @@ router.get('/addresses', ensureAuthenticated, function(req, res, next) {
 })
 
 //POST ADDRESS FOR USER
+// OB/BG: could just `include` this data for the /api/me request
 router.post('/addresses', ensureAuthenticated, function(req, res, next) {
   userInstance.createAddress(req.body)
   .then(address => {
-    console.log(address);
+    console.log(address); // OB/BG: dead code
     if(!address) throw new Error('not created!');
     res.status(201).send(address)
   })
@@ -87,9 +90,7 @@ router.post('/addresses', ensureAuthenticated, function(req, res, next) {
 router.get('/cart', ensureAuthenticated, function(req, res, next){
   console.log('route hit');
   userInstance.getCart()
-  .then(cart => {
-    return cart.getProducts()
-  })
+  .then(cart => cart.getProducts()) // OB/BG: edited one-liner
   .then(products => {
     res.send(products)
   })
@@ -97,10 +98,12 @@ router.get('/cart', ensureAuthenticated, function(req, res, next){
 })
 
 //ADD PRODUCT TO CART
+// OB/BG: MAYBE POST /api/me/cart
 router.post('/cart/:productId', ensureAuthenticated, function(req, res, next){
   let productIdToAdd = req.params.productId;
   let quantity = parseInt(req.body.quantity);
 
+  // OB/BG: shift this logic to some model method
   userInstance.getCart()
   .then(cart => {
     CartProducts.findOrCreate({
@@ -116,7 +119,7 @@ router.post('/cart/:productId', ensureAuthenticated, function(req, res, next){
         if(!created){
           let newQuantity = record.quantity + quantity;
           record.update({quantity: newQuantity})
-          .then(record => res.send(record))
+          .then(record => res.send(record)) // OB/BG: watch out for nested .thensf
         } else {
           res.send(record)
         }
@@ -130,6 +133,7 @@ router.put('/cart/:productId', ensureAuthenticated, function(req, res, next){
   let productIdToUpdate = req.params.productId;
   let quantity = parseInt(req.body.quantity);
 
+  // OB/BG: create a model method for this stuff
   userInstance.getCart()
   .then(cart => {
     return CartProducts.findOne({
@@ -151,7 +155,7 @@ router.put('/cart/:productId', ensureAuthenticated, function(req, res, next){
 
 //DELETE ITEM IN CART
 router.delete('/cart/:productId', ensureAuthenticated, function(req, res, next){
-  let productIdToAdd = req.params.productId;
+  let productIdToAdd = req.params.productId; // OB/BG: "bad verbage" -elliot
 
   userInstance.getCart()
   .then(cart => {

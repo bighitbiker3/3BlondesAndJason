@@ -15,7 +15,7 @@ module.exports = db.define('order_summary', {
 
   },
 
-  processed: {
+  processed: { // OB/BG: maybe this could be a getter instead?
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },

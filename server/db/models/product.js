@@ -7,7 +7,7 @@ module.exports = db.define('product', {
   name: {
     type: Sequelize.STRING,
     allowNull: false
-
+    // OB/BG: maybe unique?
   },
 
   price: {
@@ -18,6 +18,7 @@ module.exports = db.define('product', {
   photoUrl: {
     type: Sequelize.STRING,
     defaultValue: 'https://i.vimeocdn.com/portrait/1274237_300x300'
+    // OB/BG: check out sequelize docs for url validator
   },
 
   inventory: {
@@ -31,6 +32,7 @@ module.exports = db.define('product', {
 
   color: {
     type: Sequelize.STRING
+    // OB/BG: check for hex validation
   }
 
 

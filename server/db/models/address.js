@@ -20,13 +20,13 @@ module.exports = db.define('address', {
     allowNull: false
   },
   zip: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER, // OB/BG: should be string (my hometown is 01907)
     allowNull: false,
     validate: {
       len: [5, 5]
     }
   },
-  isShipping: {
+  isShipping: { // OB/BG: shouldn't this be tracked on the entity that associates with the address?
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
