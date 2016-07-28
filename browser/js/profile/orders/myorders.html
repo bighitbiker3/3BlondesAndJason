@@ -2,18 +2,7 @@
   <h1>Hi This is My Orders!</h1>
   <ul>
     <li ng-repeat="orderSummary in orderSummaries">
-      <h4>Order Summary</h4>
-      <pre>{{ orderSummary | json }}</pre>
-      <button ng-click="toggle(orderSummary.id)">{{ show[orderSummary.id] ? 'Show Less' : 'Show Details' }}</button>
-      <div ng-show="show[orderSummary.id]">
-        <h3>Order Details</h3>
-        <ul>
-          <li ng-repeat="detail in details[orderSummary.id]">
-            <p>Order Detail</p>
-            <pre>{{ detail | json }}</pre>
-          </li>
-        </ul>
-      </div>
+      <order-summary model="orderSummary"></order-summary>
     </li>
   </ul>
 </div>
