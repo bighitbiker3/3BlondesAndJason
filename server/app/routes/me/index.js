@@ -87,6 +87,7 @@ router.post('/addresses', ensureAuthenticated, function(req, res, next) {
 router.get('/cart', function(req, res, next){
   req.dbUser.getCart()
   .then(cart => {
+    console.log(Object.getPrototypeOf(cart));
     return cart.getProducts()
   })
   .then(products => {
