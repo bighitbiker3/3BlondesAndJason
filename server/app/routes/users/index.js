@@ -2,6 +2,7 @@
 var router = require('express').Router();
 var db = require('../../../db');
 var User = db.model('user');
+var Cart = db.model('cart');
 module.exports = router;
 
 var ensureAdmin = function (req, res, next) {
@@ -36,7 +37,11 @@ router.post('/', function(req, res, next){
   let newUser = req.body;
   User.create(newUser)
   .then(createdUser => {
-    res.status(201).send(createdUser);
+    createdUser.createCart()
+    .then(cart => {
+      res.status(201).send(createdUser);
+    })
+
   })
   .catch(next)
 });

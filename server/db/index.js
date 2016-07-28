@@ -14,7 +14,8 @@ var Cart = require('./models/cart');
 var CartProducts = require('./models/cartProducts');
 
 //Associations
-OrderSummary.belongsTo(Address);
+OrderSummary.belongsTo(Address, {as: 'Shipping'}); // add
+OrderSummary.belongsTo(Address, {as: 'Billing'}); // add
 
 OrderSummary.hasMany(OrderDetail, {as: 'OrderDetailsFromSummary'});
 
