@@ -1,2 +1,2 @@
 Welcome to our Ecommerce Website
-By: Elliott McNary, Jason Wang, Nicolaas Koster, Payton Henson
+by: Elliott McNary, Jason Wang, Nicolaas Koster, Payton Henson
