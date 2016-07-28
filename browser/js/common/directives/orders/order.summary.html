@@ -1,0 +1,13 @@
+<div class="col-md-12">
+  <h4>Order Summary from {{ orderSummary.date }}</h4>
+  <pre>{{ orderSummary | json }}</pre>
+  <button ng-click="toggle(orderSummary.id)">{{ show[orderSummary.id] ? 'Show Less' : 'Show Details' }}</button>
+  <div ng-show="show[orderSummary.id]">
+    <h3>Order Details</h3>
+    <ul>
+      <li ng-repeat="detail in details[orderSummary.id]">
+        <order-detail model="detail"></order-detail>
+      </li>
+    </ul>
+  </div>
+</div>
