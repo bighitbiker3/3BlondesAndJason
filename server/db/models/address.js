@@ -25,5 +25,13 @@ module.exports = db.define('address', {
     validate: {
       len: [5, 5]
     }
+  },
+  isShipping: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  isBilling: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })

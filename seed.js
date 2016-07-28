@@ -67,7 +67,9 @@ var seedAddresses = function(){
       street1: chance.address(),
       city: chance.city(),
       state: chance.state(),
-      zip: chance.zip()
+      zip: chance.zip(),
+      isShipping: chance.bool(),
+      isBilling: chance.bool()
     }
     newAddresses.push(newAddress)
   }
