@@ -28,12 +28,14 @@ app.controller('ProductListCtrl', function ($scope, products, Product, Utility) 
   	}
   }
 
-  //add product using the productlistfactory, passing in the selected product on the $scope
-  $scope.addProduct = function(product) {
-  	// return ProductListFactory.addProduct($scope.)
-  }
-
-
-
+  // add product to the cart to store on server
+  $scope.addProduct = function(quantity) {
+  	return ProductListFactory.addProduct($scope.product.id, quantity)
+    .then(addedProduct => {
+      // adding a cart to the scope (to accomodate loading of drop-down cart on the page)
+      $scope.cart.products.push(addedProduct);
+      return addedProduct
+      });
+  };
 
 });
