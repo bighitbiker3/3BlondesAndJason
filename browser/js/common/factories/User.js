@@ -15,6 +15,11 @@ app.factory('User', function ($http) {
     getOne: function(id){
       return $http.get('/api/users/'+id)
       .then(res => res.data);
+    },
+
+    editOne: function(id, data){
+      return $http.put('/api/users/' + id, data)
+      .then(res => res.data)
     }
   }
 })
