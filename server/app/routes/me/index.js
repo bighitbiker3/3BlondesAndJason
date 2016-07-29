@@ -65,6 +65,7 @@ router.get('/addresses', ensureAuthenticated, function(req, res, next) {
 
 //POST ADDRESS FOR USER
 router.post('/addresses', ensureAuthenticated, function(req, res, next) {
+  console.log(req.body);
   req.dbUser.createAddress(req.body.newAddress)
   .then(address => {
     if(!address) throw new Error('not created!');
@@ -76,7 +77,9 @@ router.post('/addresses', ensureAuthenticated, function(req, res, next) {
     })
   })
   .then(rowInstance => {
-    return rowInstance.update(req.body.options)
+    console.log(rowInstance);
+    if(req.body.options) return rowInstance.update(req.body.options);
+    else return;
   })
   .then(() => {
     res.status(201).send(req.body.newAddress);
