@@ -34,3 +34,5 @@ User.hasMany(OrderSummary, {as: 'UserOrders'});
 
 User.belongsTo(Cart);
 Cart.belongsToMany(Product, {through: CartProducts});
+Cart.hasMany(CartProducts, {as: 'items'});
+CartProducts.belongsTo(Product);
