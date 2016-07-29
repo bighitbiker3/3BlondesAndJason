@@ -51,16 +51,17 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart) {
   }
 
   $scope.editQuantity = function (newNum, item) {
-    if (newNum <= item.product.inventory) {
+    if(newNum > item.product.inventory) alert('That quantity exceeds our inventory, please choose a lower number');
+    else if(newNum < 0) alert('That\'s a negative number silly :)');
+    else if(newNum === 0) this.removeItem(item);
+    else if (newNum <= item.product.inventory) {
       Cart.updateQuantity(newNum, item)
       .then(newItem => {
         let idx = $scope.cartItems.indexOf(item)
         $scope.cartItems[idx].quantity = newItem.quantity;
       })
     }
-    else {
-      alert('That quantity exceeds our inventory, please choose a lower number');
-    }
+
   }
 
 });
