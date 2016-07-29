@@ -1,7 +1,7 @@
 <div>
   <h1>Hi This is My Addresses!</h1>
   <h3>Create new Address</h3>
-  <form ng-submit="createAddress(information)">
+  <form name="addAddress" ng-submit="createAddress(information)">
     <div class="form-group">
         <label for="street1">Street address</label>
         <input name="street1" type="text" ng-model="information.newAddress.street1" require class="form-control" placeholder="Enter Street">
