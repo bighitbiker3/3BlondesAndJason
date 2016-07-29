@@ -26,7 +26,6 @@ app.controller('adminOrderDetailCtrl', function($scope, Order, $stateParams, Add
     let orderDetails = order.orderDetails; //THIS IS AN ARRAY
 
     Order.updateOneOrderSummary(orderSummary.id, orderSummary)
-    .then(updatedSummary => updatedSummary)
     .then(() => {
       return Promise.all(orderDetails.map(orderDetail => Order.updateOrderDetails(orderDetail.id, orderDetail)))
     })
