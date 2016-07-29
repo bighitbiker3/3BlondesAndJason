@@ -16,7 +16,7 @@
       <td>{{ item.product.price }}</td>
       <td>{{ item.quantity }}</td>
       <td>
-        <form ng-submit="editQuantity(update)">
+        <form ng-submit="editQuantity(update.quantity, item)">
           <input ng-model="update.quantity" type="number">
           <button class="btn btn-default btn-xs" type="submit">
             <span class="glyphicon glyphicon-ok"></span>

@@ -130,7 +130,11 @@ router.put('/cart/:productId', ensureAuthenticated, function(req, res, next){
   let productIdToUpdate = req.params.productId;
   let quantity = parseInt(req.body.quantity);
 
-  req.dbUser.getCart()
+  Product.findById(productIdToUpdate)
+  .then(product => {
+    if (product.inventory < quantity) throw new Error('inventory exceeded');
+    else return req.dbUser.getCart()
+  })
   .then(cart => {
     return CartProducts.findOne({
       where: {

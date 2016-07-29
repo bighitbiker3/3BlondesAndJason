@@ -17,8 +17,8 @@ app.factory('Cart', function ($http, AuthService, $rootScope, $state) {
     return $http.delete('/api/me/cart/' + id)
   }
 
-  CartFactory.updateQuantity = function (newNum, id) {
-    return $http.put('/api/me/cart' + id, {quantity: newNum})
+  CartFactory.updateQuantity = function (newNum, item) {
+    return $http.put('/api/me/cart/' + item.product.id, {quantity: newNum})
       .then(res => res.data);
   }
 
@@ -50,8 +50,17 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart) {
     })
   }
 
-  $scope.editQuantity = function (newNum, id) {
-    console.log(update.quantity);
+  $scope.editQuantity = function (newNum, item) {
+    if (newNum <= item.product.inventory) {
+      Cart.updateQuantity(newNum, item)
+      .then(newItem => {
+        let idx = $scope.cartItems.indexOf(item)
+        $scope.cartItems[idx].quantity = newItem.quantity;
+      })
+    }
+    else {
+      alert('That quantity exceeds our inventory, please choose a lower number');
+    }
   }
 
 });
