@@ -1,18 +1,33 @@
 <div>
 
-  <h1>Youse Heer</h1>
+  <h1>Cart</h1>
 
   <table class='table'>
     <tr>
-      <th>Name</th>
+      <th>Product</th>
       <th>Price</th>
       <th>Quantity</th>
+      <th>Edit Quantity</th>
       <th>Subtotal</th>
+      <th>Remove From Cart</th>
     </tr>
     <tr ng-repeat="item in cartItems">
-      <td>{{ item.name }}</td>
-      <td>{{ item.price }}</td>
+      <td>{{ item.product.name }}</td>
+      <td>{{ item.product.price }}</td>
       <td>{{ item.quantity }}</td>
-      <td>{{ item.quantity * item.price }}</td>
+      <td>
+        <form ng-submit="editQuantity(update)">
+          <input ng-model="update.quantity" type="number">
+          <button class="btn btn-default btn-xs" type="submit">
+            <span class="glyphicon glyphicon-ok"></span>
+          </button>
+        </form>
+      </td>
+      <td>{{ item.quantity * item.product.price }}</td>
+      <td>
+        <button class="btn btn-default btn-xs" ng-click="removeItem(item)">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </td>
     </tr>
 </div>

@@ -3,6 +3,7 @@ var router = require('express').Router();
 var db = require('../../../db');
 var User = db.model('user');
 var CartProducts = db.model('cart_products');
+var Product = db.model('product')
 var UserAddresses = db.model('user_addresses');
 var utility = require('../../configure/utility');
 var ensureAdmin = utility.ensureAdmin;
@@ -87,14 +88,10 @@ router.post('/addresses', ensureAuthenticated, function(req, res, next) {
 router.get('/cart', function(req, res, next){
   req.dbUser.getCart()
   .then(cart => {
-    console.log(Object.getPrototypeOf(cart));
-    return cart.getProducts()
+    return cart.getItems({include: [Product]});
   })
-  .then(products => {
-    console.log(products);
-    res.send(products)
-  })
-  .catch(next)
+  .then(items => res.send(items))
+  .catch(next);
 })
 
 //ADD PRODUCT TO CART
@@ -154,11 +151,17 @@ router.put('/cart/:productId', ensureAuthenticated, function(req, res, next){
 
 //DELETE ITEM IN CART
 router.delete('/cart/:productId', ensureAuthenticated, function(req, res, next){
-  let productIdToAdd = req.params.productId;
+
+  let id2Remove = req.params.productId;
 
   req.dbUser.getCart()
   .then(cart => {
-    return cart.removeProduct(productIdToAdd)
+    return CartProducts.destroy({where: {
+      $and: {
+        productId: id2Remove,
+        cartId: cart.id
+      }
+    }})
   })
   .then(() => {
     res.sendStatus(204)
