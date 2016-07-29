@@ -5,6 +5,8 @@ app.controller('ProfileAddressCtrl', function($scope, addresses, Address){
     Address.createNewAddress(information)
     .then(address => {
       $scope.addresses.push(address);
+      $scope.information = {};
+      $scope.addAddress.$setPristine()
     })
   }
 })
