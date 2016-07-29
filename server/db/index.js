@@ -15,8 +15,8 @@ var CartProducts = require('./models/cartProducts');
 var UserAddresses = require('./models/userAddresses');
 
 //Associations
-OrderSummary.belongsTo(Address, {as: 'Shipping'}); // add
-OrderSummary.belongsTo(Address, {as: 'Billing'}); // add
+OrderSummary.belongsTo(Address, {as: 'shipping'}); // add
+OrderSummary.belongsTo(Address, {as: 'billing'}); // add
 
 OrderSummary.hasMany(OrderDetail, {as: 'Items'});
 

@@ -1,0 +1,7 @@
+<section>
+  <div ng-repeat="order in orders" >
+    <order-summary model="order"></order-summary>
+    <button ui-sref="admin.orderDetail({orderId: order.id})" class="btn">Edit</button>
+  </div>
+
+</section>

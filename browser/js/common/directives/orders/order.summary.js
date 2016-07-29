@@ -1,6 +1,6 @@
 'use strict';
 
-app.directive('orderSummary', function(Order){
+app.directive('orderSummary', function(Order, AuthService, $rootScope){
   return {
     restrict: 'E',
     templateUrl: 'js/common/directives/orders/order.summary.html',
@@ -14,11 +14,22 @@ app.directive('orderSummary', function(Order){
       function getOrderDetails(id){
         if(scope.details[id]) scope.show[id] = true;
         else {
-          Order.getMyOrderDetails(id)
-          .then(details => {
-            scope.show[id] = true;
-            scope.details[id] = details;
-          })
+          if($rootScope.isAdmin) {
+            console.log('is admin on root');
+            Order.getAllOrderDetails(id)
+            .then(details => {
+              scope.show[id] = true;
+              scope.details[id] = details;
+            })
+          } else {
+            console.log('no is admin on root');
+            Order.getMyOrderDetails(id)
+            .then(details => {
+              scope.show[id] = true;
+              scope.details[id] = details;
+            })
+          }
+
         }
       }
 
