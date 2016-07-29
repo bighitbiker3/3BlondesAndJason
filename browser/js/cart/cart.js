@@ -21,22 +21,11 @@ app.factory('Cart', function ($http, AuthService, $rootScope, $state) {
   }
 
   CartFactory.updateQuantity = function (newNum, item) {
-    AuthService.getLoggedInUser()
-    .then(user => {
-      if (!user) {
-        $rootScope.cart[item.id][1] = newNum;
-        return {
-          id: item.id,
-          cartObj[]
-        }
-      }
-      else return $http.put('/api/me/cart/' + item.product.id, {quantity: newNum})
-    })
+    return $http.put('/api/me/cart/' + item.product.id, {quantity: newNum})
     .then(res => res.data);
   }
 
   CartFactory.fetchNotLoggedInItems = function (cartObj) {
-    console.log(cartObj);
     let toSend = [];
     for (let productId in cartObj) {
       toSend.push({
@@ -44,7 +33,8 @@ app.factory('Cart', function ($http, AuthService, $rootScope, $state) {
         quantity: cartObj[productId][1],
         product: {
           name: cartObj[productId][0].name,
-          price: cartObj[productId][0].price
+          price: cartObj[productId][0].price,
+          inventory: cartObj[productId][0].inventory
         }
       })
     }
@@ -94,10 +84,21 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
 
   $scope.editQuantity = function (newNum, item) {
     if (newNum <= item.product.inventory && newNum > 0) {
-      Cart.updateQuantity(newNum, item)
-      .then(newItem => {
-        let idx = $scope.cartItems.indexOf(item)
-        $scope.cartItems[idx].quantity = newItem.quantity;
+      AuthService.getLoggedInUser()
+      .then(user => {
+        if (!user) {
+          $rootScope.cart[item.id][1] = newNum;
+          $scope.cartItems = Cart.fetchNotLoggedInItems($rootScope.cart);
+        }
+        else {
+          return Cart.updateQuantity(newNum, item)
+        }
+      })
+      .then((...args) => {
+        if (args[0]) {
+          let idx = $scope.cartItems.indexOf(item)
+          $scope.cartItems[idx].quantity = args[0].quantity;
+        }
       })
     }
     else {
