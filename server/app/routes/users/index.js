@@ -23,7 +23,7 @@ router.param('id', function(req, res, next, id){
 router.get('/', ensureAdmin, function(req, res, next){
   User.findAll()
   .then(users => {
-    res.send(users);
+    res.send(users.map(user => user.sanitize()));
   })
 });
 
@@ -47,7 +47,7 @@ router.put('/:id', ensureAdmin, function(req, res, next){
 
   req.foundUser.update(userUpdateData)
   .then(updatedUser => {
-    res.status(201).send(updatedUser);
+    res.status(201).send(updatedUser.sanitize());
   })
   .catch(next)
 });
@@ -63,5 +63,5 @@ router.delete('/:id', ensureAdmin, function(req, res, next){
 
 //GET SPECIFIC USER
 router.get('/:id', ensureAdmin, function(req, res, next){
-  res.send(req.foundUser)
+  res.send(req.foundUser.sanitize())
 });

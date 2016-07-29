@@ -33,5 +33,4 @@ module.exports = db.define('product', {
     type: Sequelize.STRING
   }
 
-
 });
