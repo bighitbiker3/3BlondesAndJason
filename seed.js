@@ -73,6 +73,19 @@ var randDescription = function(i){
   return descriptions[i];
 }
 
+var randPrices = function(i){
+  var prices = [
+    4099,
+    2099,
+    1099,
+    9900,
+    6999,
+    3799,
+    5999
+  ]
+  return chance.pickone(prices);
+}
+
 var randProductName = function(i) {
   var names = [
     'Interlux Brightside Polyurethane',
@@ -140,10 +153,11 @@ var seedProducts = function(){
   var newProducts = [];
 
   for (var i = 0; i < 10; i++) {
+    i = i%10;
     var newProduct = {
       name: randProductName(i),
       photoUrl: randPhoto(i),
-      price: chance.floating({fixed: 1, min: 3000, max: 5000}),
+      price: randPrices(),
       color: chance.color({format: 'hex'}),
       inventory: chance.integer({min: 0, max: 100}),
       description: randDescription(i)
