@@ -61,3 +61,9 @@ router.delete('/:id', ensureAdmin, function(req, res, next){
   })
   .catch(next);
 });
+
+
+
+router.get('/:productId/test', function(req, res, next){
+  res.send(req.product.centsToDollars())
+})
