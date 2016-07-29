@@ -8,6 +8,12 @@ product-list {
     border-radius: 10px;
     margin-bottom: .5em;
     cursor: pointer;
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+    background-size: auto 250px;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   .product-image:hover {
