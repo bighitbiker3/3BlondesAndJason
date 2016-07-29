@@ -4,15 +4,10 @@ app.controller('adminProductsCtrl', function($scope, Product){
   Product.getAll()
   .then(products => {
     $scope.products = products
-    console.log('helloooo');
   })
   .catch(error => {
     console.log(error)
   })
-
-  $scope.edit = function(){
-    console.log(this)
-  }
 })
 
 

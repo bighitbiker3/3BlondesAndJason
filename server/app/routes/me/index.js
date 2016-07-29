@@ -89,10 +89,7 @@ router.get('/cart', function(req, res, next){
   .then(cart => {
     return cart.getProducts()
   })
-  .then(products => {
-    console.log(products);
-    res.send(products)
-  })
+  .then(products => res.send(products))
   .catch(next)
 })
 

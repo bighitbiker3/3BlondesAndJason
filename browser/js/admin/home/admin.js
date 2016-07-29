@@ -1,3 +1,3 @@
-app.controller('adminCtrl', function($scope){
-  $scope.products = {}
+app.controller('adminCtrl', function($rootScope){
+  $rootScope.isAdmin = true;
 })
