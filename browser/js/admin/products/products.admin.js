@@ -16,7 +16,7 @@ app.controller('adminProductsCtrl', function($scope, Product){
 })
 
 
-app.controller('adminProductDetailCtrl', function($scope, Product, $stateParams){
+app.controller('adminProductDetailCtrl', function($scope, $state, Product, $stateParams){
   let productId = $stateParams.productId;
 
   Product.getOne(productId)
@@ -24,6 +24,7 @@ app.controller('adminProductDetailCtrl', function($scope, Product, $stateParams)
   .catch(error => console.error(error))
 
   $scope.saveChanges = function(formData){
-    console.log(formData);
+    Product.editOne(productId, formData)
+    .then(updatedProduct => $state.go('admin.products'))
   }
 })

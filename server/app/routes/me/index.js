@@ -46,7 +46,7 @@ router.get('/orders/:id', ensureAuthenticated, function(req, res, next) {
   })
   .then(order => {
     if(order.length === 0) throw new Error('no order summary found')
-    return order[0].getOrderDetailsFromSummary()
+    return order[0].getItems()
   })
   .then(orderDetails => {
     res.send(orderDetails)
