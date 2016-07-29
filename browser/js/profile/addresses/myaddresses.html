@@ -34,6 +34,10 @@
   <h1>My Current Addresses</h1>
   <ul>
     <li ng-repeat="address in addresses">
+      <pre>
+        {{address | json}}
+      </pre>
+      <button ng-click="deleteAddress(address.id, address.user_addresses.userId)">Delete</button>
       <p>{{ address.street1 }}</p>
       <p>{{ address.street2 }}</p>
       <p>{{ address.city }}, {{ address.state }} {{ address.zip }}</p>
