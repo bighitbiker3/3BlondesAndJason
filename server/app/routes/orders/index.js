@@ -63,7 +63,7 @@ router.put('/:orderSummaryId', ensureAuthenticated, function(req, res, next){
 });
 
 // Admin Level: Deletes a specific orderSummary
-router.delete('/:id', ensureAuthenticated, function(req, res, next){
+router.delete('/:orderSummaryId', ensureAuthenticated, function(req, res, next){
   if(req.user.id !== req.orderSummary.userId && !(req.user.isAdmin)) res.status(401).end()
   else{
     req.orderSummary.destroy()
