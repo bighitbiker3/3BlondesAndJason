@@ -1,5 +1,5 @@
 <div>
 <select data-ng-options="n for n in quantities" data-ng-model="quantity">
 </select>
-<button class="btn btn-default" ng-click="addToCart(productId)">Add to cart</button>
+<button class="btn btn-default" ng-disabled="added" ng-click="addToCart(productId)">{{ added ? 'Added to Cart' : 'Add to Cart'}}</button>
 </div>

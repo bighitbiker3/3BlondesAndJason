@@ -1,6 +1,6 @@
 'use strict';
 
-app.directive('addToCart', function(ProductListFactory) {
+app.directive('addToCart', function(ProductListFactory, $state) {
     return {
         restrict: 'E',
         templateUrl: 'js/common/directives/products/product.add-to-cart.html',
@@ -8,10 +8,15 @@ app.directive('addToCart', function(ProductListFactory) {
             productId: '=model'
         },
         link: function(scope, elem, attrs) {
+            scope.added = false;
             scope.quantities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
             scope.quantity = scope.quantities[0];
             scope.addToCart = function(id) {
-                return ProductListFactory.addProduct(id, scope.quantity)
+                scope.added = true;
+                ProductListFactory.addProduct(id, scope.quantity)
+                .then(() => {
+                    $state.go('cart');
+                })
             }
         }
     }
