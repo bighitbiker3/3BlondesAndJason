@@ -45,7 +45,6 @@ router.post('/', function(req, res, next){
 router.get('/:orderSummaryId', ensureAuthenticated, function(req, res, next){
   if(req.user.id !== req.orderSummary.userId && !(req.user.isAdmin)) res.status(401).end()
   else {
-    console.log(Object.getPrototypeOf(req.orderSummary));
     res.json(req.orderSummary);
   }
 });

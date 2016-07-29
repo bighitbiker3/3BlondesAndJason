@@ -15,14 +15,12 @@ app.directive('orderSummary', function(Order, AuthService, $rootScope){
         if(scope.details[id]) scope.show[id] = true;
         else {
           if($rootScope.isAdmin) {
-            console.log('is admin on root');
             Order.getAllOrderDetails(id)
             .then(details => {
               scope.show[id] = true;
               scope.details[id] = details;
             })
           } else {
-            console.log('no is admin on root');
             Order.getMyOrderDetails(id)
             .then(details => {
               scope.show[id] = true;

@@ -10,9 +10,6 @@ module.exports = router;
 router.get('/:addressId', function(req, res, next){
   let addressId = req.params.addressId
   Address.findById(addressId)
-  .then(address => {
-    console.log(address);
-    res.send(address)
-  })
+  .then(address => res.send(address))
   .catch(next)
 })

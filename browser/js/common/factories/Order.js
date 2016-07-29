@@ -28,10 +28,7 @@ app.factory('Order', function ($http) {
     },
     getAllOrderDetails: function(orderSummaryId){
       return $http.get('/api/orders/' + orderSummaryId + '/details')
-      .then(res => {
-        console.log(res);
-        return res.data
-      });
+      .then(res => res.data);
     }
   }
 })
