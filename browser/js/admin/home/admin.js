@@ -1,3 +1,3 @@
-app.controller('adminCtrl', function($rootScope){
-  $rootScope.isAdmin = true;
+app.controller('adminCtrl', function(){
+  //EMPTY FOR NOW
 })

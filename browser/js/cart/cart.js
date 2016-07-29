@@ -83,7 +83,8 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
   }
 
   $scope.editQuantity = function (newNum, item) {
-    if (newNum <= item.product.inventory && newNum > 0) {
+    if(newNum === 0) this.removeItem(item);
+    else if (newNum <= item.product.inventory && newNum > 0) {
       AuthService.getLoggedInUser()
       .then(user => {
         if (!user) {
@@ -101,9 +102,7 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
         }
       })
     }
-    else {
-      alert('That quantity exceeds our inventory, please choose a lower number');
-    }
+
   }
 
 });

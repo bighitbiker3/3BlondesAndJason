@@ -2,6 +2,15 @@ app.config(function ($stateProvider) {
     $stateProvider.state('admin', {
         url: '/admin',
         templateUrl: 'js/admin/home/admin.html',
+        resolve: {
+          authAdmin: function(AuthService, $rootScope, $state){
+            return AuthService.getLoggedInUser()
+            .then(user => {
+              if(!user.isAdmin) $state.go('home');
+              else $rootScope.isAdmin = true;
+            })
+          }
+        },
         controller: 'adminCtrl'
     })
     .state('admin.users', {
