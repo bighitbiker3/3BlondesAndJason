@@ -37,6 +37,60 @@ var postValidationOrderSummaries;
 var postValidationAddresses;
 var postValidationOrderDetails;
 
+// RAND photoUrl, description and product name
+
+var randPhoto = function(i){
+  var pictureUrls = [
+    'http://i.imgur.com/slRBKiu.jpg',
+    'http://i.imgur.com/J4naKJE.jpg',
+    'http://i.imgur.com/BoTnCz4.jpg',
+    'http://i.imgur.com/dgpKnd7.jpg',
+    'http://i.imgur.com/MMGEFuf.jpg',
+    'http://i.imgur.com/ajdtUaL.jpg',
+    'http://i.imgur.com/ad3ibgE.jpg',
+    'http://i.imgur.com/3pt8pu7.jpg',
+    'http://i.imgur.com/u0HQOMQ.jpg',
+    'http://i.imgur.com/AJKBnJi.jpg'
+  ]
+  return pictureUrls[i];
+}
+
+var randDescription = function(i){
+  var descriptions = [
+    'Interlux Brightside Polyurethane is the most technically advanced one-part polyurethane available. It contains unique additives that make cleaning easier and help reduce stains and abrasion.', 
+    'Perfection is the ultimate performing, 2-part polyurethane gloss finish. It provides the longest lasting, ultra high-gloss finish that has superb color retention, together with excellent chemical, impact & abrasion resistance.', 
+    'Interlux PreKote primer is used above the waterline prior to painting topsides with Brightside polyurethane, Toplac, yacht enamels, or any one part topside finish on wood, fiberglass, and previously painted surfaces.', 
+    'Interlux Fiberglass Surface Prep is the first step in a 2 step system for removing mold release agents (wax) from gelcoat prior to application of antifouling boat bottom paint. ',
+    'Golspar Satin is a dull gloss varnish ideal for anywhere a low-lustre, dull gloss effect is desired, such as cabinets tables counters etc.',
+    'Interlux Clear Wood Sealer is a fast drying urethane used for priming wood prior to application of single part varnishes or two component urethane finishes.',
+    'This dual biocide antifouling paint combines Biolux slime blocker and Econea, a metal-free antifouling agent that blocks the growth of shell fouling barnacles, zebra mussels and other aquatic organisms.',
+    'Perfection is the ultimate performing, 2-part polyurethane gloss finish. It provides the longest lasting, ultra high-gloss finish that has superb color retention, together with excellent chemical, impact & abrasion resistance.',
+    'Interlux Interstain is both a wood filler and stain to serve two purposes: it fills the grain of the wood, and stains the wood to enhance its natural beauty.',
+    'Inter-Prime Wood Sealer is clear and eliminates high or low spots before the application of varnish or paint. Interlux 1026 is recommended to seal plywood. Not for use with two-part polyurethanes or epoxy paint.'
+
+  ]
+
+  return descriptions[i];
+}
+
+var randProductName = function(i) {
+  var names = [
+    'Interlux Brightside Polyurethane',
+    'Interlux Brushing Liquid 333',
+    'Interlux Perfection Two Part Polyurethane',
+    'Interlux InterProtect 2000E Epoxy Primer',
+    'Interlux Pre-Kote Primer for One-Part Finishes',
+    'Interlux Schooner Varnish',
+    'Interlux Seam Compound',
+    'Interlux Micron CSC Antifouling Bottom Paint',
+    'Interlux Fiberglass Surface Prep (YMA601)',
+    'Interlux Epiglass Epoxy Resin',
+    'Interlux Interstrip 299E Fiberglass Paint Remover'
+  ]
+  return names[i];
+}
+
+
 //SEED USERS
 var seedUsers = function () {
   var newUsers = [];
@@ -85,13 +139,14 @@ var seedAddresses = function(){
 var seedProducts = function(){
   var newProducts = [];
 
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 10; i++) {
     var newProduct = {
-      name: chance.word(),
-      price: chance.floating({fixed: 2, min: 0, max: 1000}),
+      name: randProductName(i),
+      photoUrl: randPhoto(i),
+      price: chance.floating({fixed: 1, min: 3000, max: 5000}),
       color: chance.color({format: 'hex'}),
-      inventory: chance.integer({min: 0, max: 1000}),
-      description: chance.paragraph()
+      inventory: chance.integer({min: 0, max: 100}),
+      description: randDescription(i)
     }
     newProducts.push(newProduct)
   }
@@ -156,6 +211,7 @@ var seedOrderDetails = function(){
 
   return Promise.all(creatingOrderDetails);
 };
+
 
 db.sync({ force: true })
     .then(function () {
