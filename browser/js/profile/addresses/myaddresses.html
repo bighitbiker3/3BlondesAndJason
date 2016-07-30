@@ -1,7 +1,7 @@
 <div>
   <h1>Hi This is My Addresses!</h1>
   <h3>Create new Address</h3>
-  <form ng-submit="createAddress(information)">
+  <form name="addAddress" ng-submit="createAddress(information)">
     <div class="form-group">
         <label for="street1">Street address</label>
         <input name="street1" type="text" ng-model="information.newAddress.street1" require class="form-control" placeholder="Enter Street">
@@ -34,6 +34,10 @@
   <h1>My Current Addresses</h1>
   <ul>
     <li ng-repeat="address in addresses">
+      <pre>
+        {{address | json}}
+      </pre>
+      <button ng-click="deleteAddress(address.id, address.user_addresses.userId)">Delete</button>
       <p>{{ address.street1 }}</p>
       <p>{{ address.street2 }}</p>
       <p>{{ address.city }}, {{ address.state }} {{ address.zip }}</p>

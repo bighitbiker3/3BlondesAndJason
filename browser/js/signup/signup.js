@@ -6,7 +6,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('signUpCtrl', function($scope, User, AuthService, $state){
+app.controller('signUpCtrl', function($scope, User, AuthService, $state, $rootScope, Login){
   $scope.error = null;
 
   $scope.sendSignup = function (signupInfo) {
@@ -19,13 +19,17 @@ app.controller('signUpCtrl', function($scope, User, AuthService, $state){
     else if($scope.signupForm.$error.required) $scope.error = 'All fields are required';
     else {
       User.signup(signupInfo)
-      .then(function(user){
+      .then(function (){
         //log user in if the signup was successful
-        AuthService.login({email: signupInfo.email, password: signupInfo.password});
-        //redirect to home
-        $state.go('home');
+        return AuthService.login({email: signupInfo.email, password: signupInfo.password})
       })
-      .catch(function(err) {
+      .then(() => {
+          if ($rootScope.cart) {
+              return Login.persistPseudoCart($rootScope.cart)
+          }
+      })
+      .then(() => $state.go('home'))
+      .catch(function (err) {
         $scope.error = 'There was an error. Error 432052. Please contact Payton';
       });
     };

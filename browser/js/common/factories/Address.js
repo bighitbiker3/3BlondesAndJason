@@ -13,6 +13,10 @@ app.factory('Address', function ($http) {
     getOneAddress: function(id){
       return $http.get('/api/address/' + id)
       .then(res => res.data)
+    },
+    removeAddressFromUser: function(addressId, userId){
+      return $http.delete('/api/address/' + addressId + '/' + userId)
+      .then(res => res.data)
     }
   }
 });
