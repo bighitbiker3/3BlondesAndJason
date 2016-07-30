@@ -1,4 +1,8 @@
-app.controller('usersAdminCtrl', function($scope, User){
+app.controller('usersAdminCtrl', function($scope, User, $rootScope){
+
+  $rootScope.$on('searching', function(e, data){
+    $scope.search = data;
+  })
   //Get all and add to scope
   User.getAll()
   .then(users => $scope.users = users)

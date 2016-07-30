@@ -9,8 +9,12 @@ app.directive('adminNav', function(AuthService, $rootScope){
               scope.user = user;
           });
       };
-      $rootScope.search = {
+      scope.search = {
         adminSearch: ''
+      }
+
+      scope.searching = function(){
+        $rootScope.$broadcast('searching', scope.search)
       }
       setUser()
     }

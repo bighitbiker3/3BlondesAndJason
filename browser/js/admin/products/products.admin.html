@@ -1,5 +1,5 @@
 <section>
   <div class="col-md-12">
-    <product-list-admin ng-repeat="product in products" model="product"></product-list-admin>
+    <product-list-admin ng-repeat="product in products | filter:search.adminSearch" model="product"></product-list-admin>
   </div>
 </section>

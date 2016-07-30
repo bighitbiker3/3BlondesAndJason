@@ -1,6 +1,4 @@
-<pre>
-  {{search.adminSearch}}
-</pre>
+
 <div class="row">
   <div class="col-md-12 admin-nav">
     <h1>Welcome {{user.firstName}} - The King Of Paints</h1>
@@ -9,7 +7,7 @@
     <button ui-sref="admin.users" class="btn btn-primary">Edit Users</button>
     <button ui-sref="admin.orders" class="btn btn-primary">Edit Orders</button>
     <form class="admin-search">
-      <input placeholder="Search" ng-model="search.adminSearch">
+      <input ng-keypress="searching()" placeholder="Search" ng-model="search.adminSearch">
     </form>
   </div>
 </div>
