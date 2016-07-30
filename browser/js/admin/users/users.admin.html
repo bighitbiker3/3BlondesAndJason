@@ -1,5 +1,8 @@
+<pre>
+  {{search.adminSearch}}
+</pre>
 <section>
   <div class="col-md-12">
-    <user-list-admin ng-repeat="user in users | filter:search:strict" model="user"></user-list-admin>
+    <user-list-admin ng-repeat="user in users | filter:search.adminSearch" model="user"></user-list-admin>
   </div>
 </section>

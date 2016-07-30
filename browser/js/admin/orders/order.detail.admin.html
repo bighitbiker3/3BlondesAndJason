@@ -1,13 +1,15 @@
 <section>
 
-<form ng-submit="saveChanges(order)">
-  <h1>Order Summary</h1>
-  <h3>Order id: {{order.orderSummary.id}}</h3>
-  <p>Date Placed: {{order.orderSummary.createdAt}}</p>
-  <div class="form-group">
-    <label class="checkbox-inline"><input type="checkbox" ng-model="order.orderSummary.paid" > Paid</label>
+<form class="admin-detail-form" ng-submit="saveChanges(order)">
+  <div class="order-summary-admin-info">
+    <h1>Order Summary</h1>
+    <h3>Order id: {{order.orderSummary.id}}</h3>
+    <h4>Date Placed: {{order.orderSummary.createdAt}}</h4>
+    <div class="form-group">
+      <label class="checkbox-inline"><input type="checkbox" ng-model="order.orderSummary.paid"><h4>Paid</h4></label>
+    </div>
   </div>
-  <div ng-repeat="orderDetail in order.orderDetails">
+  <div class="well" ng-repeat="orderDetail in order.orderDetails | filter:$root.search.adminSearch">
     <h3>Product Purchase ID: {{orderDetail.id}}</h3>
     <h4>Name: {{orderDetail.product.name}}</h4>
     <div class="form-group">

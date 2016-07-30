@@ -1,4 +1,4 @@
-app.directive('adminNav', function(AuthService){
+app.directive('adminNav', function(AuthService, $rootScope){
   return {
     restrict: 'E',
     scope: {},
@@ -9,6 +9,9 @@ app.directive('adminNav', function(AuthService){
               scope.user = user;
           });
       };
+      $rootScope.search = {
+        adminSearch: ''
+      }
       setUser()
     }
   }
