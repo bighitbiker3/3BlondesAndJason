@@ -1,3 +1,19 @@
+app.factory('Login', function ($http, $rootScope, $q) {
+    let loginFactory = {};
+
+    loginFactory.persistPseudoCart = function (cartObj) {
+        let promiseArr = [];
+        for (let productId in cartObj) {
+            promiseArr.push($http.post('/api/me/cart/' + productId, {quantity: cartObj[productId][1]}));
+        }
+        delete $rootScope.cart;
+        return $q.all(promiseArr);
+    }
+
+    return loginFactory;
+});
+
+
 app.config(function ($stateProvider) {
 
     $stateProvider.state('login', {
@@ -8,7 +24,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('LoginCtrl', function ($scope, AuthService, $state) {
+app.controller('LoginCtrl', function ($scope, AuthService, $state, $rootScope, Login) {
 
     $scope.login = {};
     $scope.error = null;
@@ -17,11 +33,19 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state) {
 
         $scope.error = null;
 
-        AuthService.login(loginInfo).then(function () {
+        AuthService.login(loginInfo)
+        .then(() => {
+            if ($rootScope.cart) {
+                return Login.persistPseudoCart($rootScope.cart)
+            }
+        })
+        .then(function () {
             $state.go('home');
-        }).catch(function () {
+        })
+        .catch(function () {
             $scope.error = 'Invalid login credentials.';
         });
+
 
     };
 
