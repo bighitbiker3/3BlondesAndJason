@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   background: #fdfdfd;
 }
 
@@ -14,14 +14,10 @@ body {
   }
 }
 
-#main {
-  padding-top: 60px;
-  margin: 0 auto;
-}
-
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';
 @import 'tutorial/main';
 @import 'login/main';
 @import 'signup/main';
+
