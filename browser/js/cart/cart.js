@@ -65,6 +65,8 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
 
   $scope.cartItems = cartItems;
 
+  $scope.edit = false;
+
   $scope.removeItem = function (item) {
     AuthService.getLoggedInUser()
     .then(user => {
@@ -83,6 +85,7 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
   }
 
   $scope.editQuantity = function (newNum, item) {
+    $scope.edit = false;
     if(newNum === 0) this.removeItem(item);
     else if (newNum <= item.product.inventory && newNum > 0) {
       AuthService.getLoggedInUser()
@@ -103,6 +106,10 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
       })
     }
 
+  }
+
+  $scope.editView = function () {
+    $scope.edit = true;
   }
 
 });

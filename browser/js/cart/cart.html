@@ -7,18 +7,20 @@
       <th>Product</th>
       <th>Price</th>
       <th>Quantity</th>
-      <th>Edit Quantity</th>
       <th>Subtotal</th>
       <th>Remove From Cart</th>
     </tr>
     <tr ng-repeat="item in cartItems">
       <td>{{ item.product.name }}</td>
       <td>{{ item.product.price }}</td>
-      <td>{{ item.quantity }}</td>
       <td>
-        <form ng-submit="editQuantity(update.quantity, item)">
+        <span ng-hide="edit">{{ item.quantity }}</span>
+        <button ng-hide="edit" class="btn btn-default btn-xs" ng-click="editView()">
+          <span class="glyphicon glyphicon-pencil"></span>
+        </button>
+        <form ng-show="edit" ng-submit="editQuantity(update.quantity, item)">
           <input ng-model="update.quantity" type="number">
-          <button class="btn btn-default btn-xs" type="submit">
+          <button ng-show="edit" class="btn btn-default btn-xs" type="submit">
             <span class="glyphicon glyphicon-ok"></span>
           </button>
         </form>
