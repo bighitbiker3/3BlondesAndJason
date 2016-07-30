@@ -85,7 +85,6 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
   }
 
   $scope.editQuantity = function (newNum, item) {
-    console.log('In the editQuant func');
     $scope.edit = false;
     if(newNum === 0) this.removeItem(item);
     else if (newNum <= item.product.inventory && newNum > 0) {
