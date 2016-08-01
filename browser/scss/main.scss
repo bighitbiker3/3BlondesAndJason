@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   background: #fdfdfd;
 }
 
@@ -12,11 +12,6 @@ body {
     display: table;
     clear: both;
   }
-}
-
-#main {
-  padding-top: 60px;
-  margin: 0 auto;
 }
 
 @import 'directives/main';
