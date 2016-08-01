@@ -73,7 +73,7 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
     AuthService.getLoggedInUser()
     .then(user => {
       if (!user) {
-        $window.sessionStorage.remove(item.id)
+        $window.sessionStorage.removeItem(item.id)
         $scope.cartItems = Cart.fetchNotLoggedInItems();
       }
       else return Cart.removeItem(item.product.id)
