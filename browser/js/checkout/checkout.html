@@ -1,0 +1,39 @@
+<div class="container">
+    <h3>Checkout</h3>
+    <hr>
+    <table class="table table-striped">
+        <tr>
+            <th></th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        <tr ng-repeat="item in cartItems">
+            <td>
+                <h3>{{item.product.title}}</h3><img ng-src="{{item.product.photoUrl}}" style="width:100%"></td>
+            <td>{{item.product.description}}</td>
+            <td>${{item.product.price}}</td>
+            <td>{{item.quantity}}</td>
+            <td>${{item.quantity * item.product.price}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><strong>Total: </strong></td>
+            <td>${{totalPrice}}</td>
+        </tr>
+    </table>
+    
+    <div class="panel panel-default" ng-repeat="address in addresses">
+        <div class="panel-body">
+            <button ng-click="setCurrentShipping(address)">Use as shipping</button>
+            <button ng-click="setCurrentBilling(address)">Use as billing</button>
+            <address model="address" ng-show="showAddress">
+            {{address.street1}}
+            </address>
+        </div>
+    </div>
+    <payment></payment>
+</div>
