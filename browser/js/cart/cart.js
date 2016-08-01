@@ -1,4 +1,4 @@
-app.factory('Cart', function ($http, AuthService, $rootScope, $state) {
+app.factory('Cart', function ($http, AuthService, $rootScope, $state, $window) {
   var CartFactory = {};
 
   var cartUrl = '/api/me/cart'
@@ -11,6 +11,7 @@ app.factory('Cart', function ($http, AuthService, $rootScope, $state) {
         .then(res => res.data);
       }
       else {
+
         return $rootScope.cart;
       }
     })
@@ -25,16 +26,17 @@ app.factory('Cart', function ($http, AuthService, $rootScope, $state) {
     .then(res => res.data);
   }
 
-  CartFactory.fetchNotLoggedInItems = function (cartObj) {
+  CartFactory.fetchNotLoggedInItems = function () {
     let toSend = [];
-    for (let productId in cartObj) {
+    for(let key in $window.sessionStorage){
+      let obj = JSON.parse($window.sessionStorage[key]);
       toSend.push({
-        id: productId,
-        quantity: cartObj[productId][1],
+        id: key,
+        quantity: obj[1],
         product: {
-          name: cartObj[productId][0].name,
-          price: cartObj[productId][0].price,
-          inventory: cartObj[productId][0].inventory
+          name: obj[0].name,
+          price: obj[0].price,
+          inventory: obj[0].inventory
         }
       })
     }
@@ -61,7 +63,7 @@ app.config(function ($stateProvider) {
   })
 })
 
-app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $rootScope) {
+app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $rootScope, $window) {
 
   $scope.cartItems = cartItems;
 
@@ -71,8 +73,8 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
     AuthService.getLoggedInUser()
     .then(user => {
       if (!user) {
-        delete $rootScope.cart[item.id];
-        $scope.cartItems = Cart.fetchNotLoggedInItems($rootScope.cart);
+        $window.sessionStorage.remove(item.id)
+        $scope.cartItems = Cart.fetchNotLoggedInItems();
       }
       else return Cart.removeItem(item.product.id)
     })
@@ -91,8 +93,11 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
       AuthService.getLoggedInUser()
       .then(user => {
         if (!user) {
-          $rootScope.cart[item.id][1] = newNum;
-          $scope.cartItems = Cart.fetchNotLoggedInItems($rootScope.cart);
+          let userSession = $window.sessionStorage;
+          let thisArr = JSON.parse(userSession.getItem(item.id)); //[product, quantity]
+					thisArr[1] = newNum;
+					userSession.setItem([item.id], JSON.stringify([item.product, thisArr[1]]))
+          $scope.cartItems = Cart.fetchNotLoggedInItems();
         }
         else {
           return Cart.updateQuantity(newNum, item)
