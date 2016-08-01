@@ -15,6 +15,7 @@ app.factory('Address', function ($http) {
       .then(res => res.data)
     },
     removeAddressFromUser: function(addressId, userId){
+        // JA and BG: Use ES6 template strings
       return $http.delete('/api/address/' + addressId + '/' + userId)
       .then(res => res.data)
     }

@@ -36,7 +36,7 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state, $rootScope, L
         AuthService.login(loginInfo)
         .then(() => {
             if ($rootScope.cart) {
-                return Login.persistPseudoCart($rootScope.cart)
+                return Login.persistPseudoCart($rootScope.cart) // JA and BG: $rootScope.cart comes from where?
             }
         })
         .then(function () {

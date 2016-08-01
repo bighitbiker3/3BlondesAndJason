@@ -3,6 +3,8 @@ app.factory('Cart', function ($http, AuthService, $rootScope, $state, $window) {
 
   var cartUrl = '/api/me/cart'
 
+    // JA and BG: maybe this function should determine logged in user
+    // and retrieve cart items with fetchnotloggedin or $http
   CartFactory.fetchCartItems = function () {
     return AuthService.getLoggedInUser()
     .then(user => {
@@ -28,12 +30,16 @@ app.factory('Cart', function ($http, AuthService, $rootScope, $state, $window) {
 
   CartFactory.fetchNotLoggedInItems = function () {
     let toSend = [];
+      // JA and BG: Maybe lodash or using ES6 for..of loop would be better
+      // Even better a third-party library.
+      // LOCALSTORAGE is likely what you want here, luckily has an identical API
+      // ngLocalStorage
     for(let key in $window.sessionStorage){
       let obj = JSON.parse($window.sessionStorage[key]);
       toSend.push({
         id: key,
         quantity: obj[1],
-        product: {
+        product: { // JA and BG: make this equal to obj[0]
           name: obj[0].name,
           price: obj[0].price,
           inventory: obj[0].inventory
@@ -78,26 +84,26 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
       }
       else return Cart.removeItem(item.product.id)
     })
-    .then((...args) => {
+    .then((...args) => { // JA and BG: why use rest if only using first arg?
       if (args[0]) {
         let idx = $scope.cartItems.indexOf(item);
-        $scope.cartItems.splice(idx, 1);
+        $scope.cartItems.splice(idx, 1); // JA and BG: this is a mutable operation
       }
     })
   }
 
   $scope.editQuantity = function (newNum, item) {
     $scope.edit = false;
-    if(newNum === 0) this.removeItem(item);
+    if(newNum === 0) this.removeItem(item); // JA and BG: what if this goes wrong?
     else if (newNum <= item.product.inventory && newNum > 0) {
-      AuthService.getLoggedInUser()
+      AuthService.getLoggedInUser() // JA and BG: another example of checking user
       .then(user => {
         if (!user) {
           let userSession = $window.sessionStorage;
           let thisArr = JSON.parse(userSession.getItem(item.id)); //[product, quantity]
-					thisArr[1] = newNum;
-					userSession.setItem([item.id], JSON.stringify([item.product, thisArr[1]]))
-          $scope.cartItems = Cart.fetchNotLoggedInItems();
+            thisArr[1] = newNum;
+            userSession.setItem([item.id], JSON.stringify([item.product, thisArr[1]]))
+          $scope.cartItems = Cart.fetchNotLoggedInItems(); // JA and BG: $q.when()
         }
         else {
           return Cart.updateQuantity(newNum, item)

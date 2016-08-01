@@ -17,7 +17,7 @@ app.directive('orderSummary', function(Order, AuthService, $rootScope){
           if($rootScope.isAdmin) {
             Order.getAllOrderDetails(id)
             .then(details => {
-              scope.show[id] = true;
+              scope.show[id] = true; // JA and BG: DRY out this function
               scope.details[id] = details;
             })
           } else {

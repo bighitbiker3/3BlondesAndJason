@@ -4,6 +4,8 @@ app.factory('Product', function ($http) {
 
 	var ProductFactory = {};
 
+	// JA and BG: why attach to ProductFactory -- normal variable
+    // actively think about public interface to anything using factory
 	ProductFactory.url = '/api/products'
 
 	ProductFactory.getAll = function(query) {
