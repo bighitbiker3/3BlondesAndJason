@@ -1,0 +1,29 @@
+  <form name="addAddress" ng-submit="createAddress(information)">
+    <div class="form-group">
+        <label for="street1">Street address</label>
+        <input name="street1" type="text" ng-model="information.newAddress.street1" require class="form-control" placeholder="Enter Street">
+    </div>
+    <div class="form-group">
+        <label for="street2">Street address 2</label>
+        <input name="street2" type="text" ng-model="information.newAddress.street2" class="form-control" placeholder="Enter Street">
+    </div>
+    <div class="form-group">
+        <label for="city">City</label>
+        <input name="city" type="text" ng-model="information.newAddress.city" require class="form-control" placeholder="Enter City">
+    </div>
+    <div class="form-group">
+        <label for="state">State</label>
+        <input name="state" type="text" ng-model="information.newAddress.state" require class="form-control" placeholder="Enter 2 Letter State">
+    </div>
+    <div class="form-group">
+        <label for="zip">Zipcode</label>
+        <input name="zip" type="text" ng-model="information.newAddress.zip" require class="form-control" placeholder="Enter Zipcode">
+    </div>
+    <div class="form-group">
+        <label>Choose type of address</label>
+        <label class="checkbox-inline"><input type="checkbox" ng-model="information.options.isBilling" value="true">Billing Address</label>
+        <label class="checkbox-inline"><input type="checkbox" ng-model="information.options.isShipping" value="true">Shipping Address</label>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+
+  </form>

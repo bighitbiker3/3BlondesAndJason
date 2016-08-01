@@ -40,9 +40,24 @@ navbar {
   .login-button {
     float: right;
     border: 1px solid black;
+    margin-right: 10px;
     margin-top: 10px;
     background: none;
     outline: none !important;
+    &:hover {
+      color: #fff;
+      background-color: rgba(0,0,0,0.7);
+    }
+  }
+
+  .shopping-cart {
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    &:hover {
+      color: rgba(17, 38, 96, 1);
+      cursor: pointer;
+    }
   }
 
   .welcome {
@@ -58,5 +73,4 @@ navbar {
       cursor: pointer;
     }
   }
-
 }
