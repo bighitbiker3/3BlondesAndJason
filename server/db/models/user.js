@@ -51,6 +51,8 @@ module.exports = db.define('user', {
             return _.omit(this.toJSON(), ['password', 'salt']);
         },
         correctPassword: function (candidatePassword) {
+          console.log(this.password, this.salt);
+          console.log(this.Model.encryptPassword(candidatePassword, this.salt));
             return this.Model.encryptPassword(candidatePassword, this.salt) === this.password;
         }
     },
@@ -62,6 +64,7 @@ module.exports = db.define('user', {
             var hash = crypto.createHash('sha1');
             hash.update(plainText);
             hash.update(salt);
+            console.log(salt, 'salt');
             return hash.digest('hex');
         }
     },
@@ -69,7 +72,9 @@ module.exports = db.define('user', {
         beforeValidate: function (user) {
             if (user.changed('password')) {
                 user.salt = user.Model.generateSalt();
+                console.log(user.salt, 'in before validate (salt)');
                 user.password = user.Model.encryptPassword(user.password, user.salt);
+                console.log(user.password, 'pw in before valid');
             }
         }
     }
