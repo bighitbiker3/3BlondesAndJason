@@ -1,6 +1,11 @@
 'use strict';
 
-app.controller('adminProductsCtrl', function($scope, Product){
+app.controller('adminProductsCtrl', function($scope, Product, $rootScope){
+
+  $rootScope.$on('searching', function(e, data){
+    $scope.search = data;
+  })
+
   Product.getAll()
   .then(products => {
     $scope.products = products

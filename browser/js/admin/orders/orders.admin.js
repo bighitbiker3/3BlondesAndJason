@@ -1,4 +1,9 @@
-app.controller('adminOrdersCtrl', function($scope, Order){
+app.controller('adminOrdersCtrl', function($scope, Order, $rootScope){
+
+  $rootScope.$on('searching', function(e, data){
+    $scope.search = data;
+  })
+
   Order.getAllOrderSummaries()
   .then(orders => {
     $scope.orders = orders
