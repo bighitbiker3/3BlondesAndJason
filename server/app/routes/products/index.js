@@ -5,6 +5,8 @@ var Product = db.model('product');
 var utility = require('../../configure/utility');
 var ensureAdmin = utility.ensureAdmin;
 var ensureAuthenticated = utility.ensureAuthenticated;
+var ntc = utility.ntc;
+ntc.init();
 module.exports = router;
 
 
@@ -13,6 +15,7 @@ router.param('productId', function(req, res, next, id){
   Product.findById(id)
   .then(product => {
     if(!product) throw new Error('not found!');
+    product.dataValues.colorName = ntc.name(product.color)[1];
     req.product = product;
     next();
     return null;
@@ -26,8 +29,13 @@ router.get('/', function(req, res, next){
     where: req.query
   })
   .then(products => {
+    products = products.map(function(product){
+      product.dataValues.colorName = ntc.name(product.color)[1];
+      return product;
+    })
     res.json(products);
   })
+  .catch(next);
 });
 
 // Admin Level: Posts a new product
