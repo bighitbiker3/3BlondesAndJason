@@ -28,6 +28,7 @@ app.controller('CheckoutCtrl', function($scope, cartItems, Card, Order, me, $roo
     $scope.createOrder = function(order){
         Order.createOrderSummary(order.orderSummary)
         .then(orderSummary => {
+            order.orderDetails.orderSummaryId = orderSummary.id;
             return Order.createOrderDetails(orderSummary.id, order.orderDetails);
         })
         .then($state.go('home'))
