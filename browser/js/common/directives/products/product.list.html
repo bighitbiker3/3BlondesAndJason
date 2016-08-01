@@ -1,12 +1,8 @@
-<div class="col-md-3">
-  <img ng-src="{{ product.photoUrl }}" ui-sref="product({id: product.id})">
-  <h5>{{ product.name }}</h5>
-  <h6>{{ product.inventory }}</h6>
-  <h6>{{ product.description }}</h6>
-  <h6>{{ product.color }}</h6>
-  <row>
-  	<h6 class="offer-price">$ {{ product.price }}</h6>
-  	<add-to-cart model="product"></add-to-cart>
-  </row>
-
+<div class="col-md-3 product-div">
+  <img class="product-image" ui-sref="product({id: product.id})" style="background-image: url({{ product.photoUrl }})">
+  <h4>{{ product.name }}</h4>
+  <h5>Color: <span style="color: {{ product.color }}">{{ product.colorName }}</span></h5>
+  <h6>{{ product.description }}...</h6>
+  <h5>$ {{ product.price }}</h6>
+  <add-to-cart model="product.id"></add-to-cart>
 </div>
