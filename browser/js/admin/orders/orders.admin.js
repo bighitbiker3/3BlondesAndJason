@@ -11,6 +11,7 @@ app.controller('adminOrderDetailCtrl', function($scope, Order, $stateParams, Add
   $scope.order = {};
   Order.getOneOrderSummary(orderId)
   .then(orderSummary => {
+    console.log(orderSummary);
     $scope.order.orderSummary = orderSummary
     return Address.getOneAddress(orderSummary.shippingId)
   })
@@ -32,5 +33,16 @@ app.controller('adminOrderDetailCtrl', function($scope, Order, $stateParams, Add
     .then(() => $state.go('admin.orders'))
     .catch(error => console.error(error))
 
+    //Now we check if all details are processed to change the master summary 'processed'
+    let processed;
+    OrderDetail.findAll({where:{orderSummaryId: this.id}})
+    .then(details => {
+      console.log(details.filter(detail => !detail.processed));
+      details.filter(detail => !detail.processed).length > 0 ? processed = false : processed = true;
+    })
+    .then(() => {
+      console.log(processed)
+      return processed;
+    })
   }
 })
