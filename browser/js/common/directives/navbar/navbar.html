@@ -13,10 +13,10 @@
         </ul>
         <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
         <button ng-show="!user" ui-sref="signup" class="btn login-button">Signup</button>
-        <i ui-sref="cart" class='fa fa-shopping-cart fa-2x shopping-cart'></i>
         <div ng-show="user" class="welcome">
             <span>Welcome, {{ user.firstName }}!</span>
             <a ng-click="logout()">Logout</a>
         </div>
+        <i ui-sref="cart" class='fa fa-shopping-cart fa-2x shopping-cart'></i>
     </div>
 </nav>

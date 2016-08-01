@@ -29,6 +29,13 @@ app.factory('Order', function ($http) {
     getAllOrderDetails: function(orderSummaryId){
       return $http.get('/api/orders/' + orderSummaryId + '/details')
       .then(res => res.data);
+    },
+    submitOrder: function (payment, cart, billingAddress) {
+    return $http.post('/api/orders', {payment: payment, cart: cart, shippingAddress: shippingAddress, billingAddress: billingAddress })
+      .then(function (response) {
+        var order = response.data;
+        return order;
+      });
     }
   }
 })

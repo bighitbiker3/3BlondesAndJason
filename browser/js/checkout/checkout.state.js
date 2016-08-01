@@ -4,7 +4,7 @@ app.config(function($stateProvider){
 		templateUrl: 'js/checkout/checkout.html',
 		controller: 'CheckoutCtrl',
 		resolve : {
-			cart : function(Cart){
+			fetchCartItems : function(Cart){
 				return Cart.fetchCartItems();
 			}
 		}

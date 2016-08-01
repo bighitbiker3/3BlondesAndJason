@@ -25,11 +25,16 @@
             <td>${{totalPrice}}</td>
         </tr>
     </table>
-    <button ng-click="showAddress=true" class="btn btn-default">Create new address</button> 
-    <div ng-repeat="address in addresses">
-        <button ng-click="setCurrentShipping(address)">Use this as shipping</button>
-        <button ng-click="setCurrentBilling(address)">Use this as billing</button>
-        <address model="address" ng-show="showAddress"></address>
+    
+    <div class="panel panel-default" ng-repeat="address in addresses">
+        <div class="panel-body">
+            <button ng-click="setCurrentShipping(address)">Use as shipping</button>
+            <button ng-click="setCurrentBilling(address)">Use as billing</button>
+            <address model="address" ng-show="showAddress">
+            {{address.street1}}
+            </address>
+        </div>
     </div>
     <payment></payment>
+    <button ng-click="charge()">Place order</button>
 </div>
