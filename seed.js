@@ -57,9 +57,9 @@ var randPhoto = function(i){
 
 var randDescription = function(i){
   var descriptions = [
-    'Interlux Brightside Polyurethane is the most technically advanced one-part polyurethane available. It contains unique additives that make cleaning easier and help reduce stains and abrasion.', 
-    'Perfection is the ultimate performing, 2-part polyurethane gloss finish. It provides the longest lasting, ultra high-gloss finish that has superb color retention, together with excellent chemical, impact & abrasion resistance.', 
-    'Interlux PreKote primer is used above the waterline prior to painting topsides with Brightside polyurethane, Toplac, yacht enamels, or any one part topside finish on wood, fiberglass, and previously painted surfaces.', 
+    'Interlux Brightside Polyurethane is the most technically advanced one-part polyurethane available. It contains unique additives that make cleaning easier and help reduce stains and abrasion.',
+    'Perfection is the ultimate performing, 2-part polyurethane gloss finish. It provides the longest lasting, ultra high-gloss finish that has superb color retention, together with excellent chemical, impact & abrasion resistance.',
+    'Interlux PreKote primer is used above the waterline prior to painting topsides with Brightside polyurethane, Toplac, yacht enamels, or any one part topside finish on wood, fiberglass, and previously painted surfaces.',
     'Interlux Fiberglass Surface Prep is the first step in a 2 step system for removing mold release agents (wax) from gelcoat prior to application of antifouling boat bottom paint. ',
     'Golspar Satin is a dull gloss varnish ideal for anywhere a low-lustre, dull gloss effect is desired, such as cabinets tables counters etc.',
     'Interlux Clear Wood Sealer is a fast drying urethane used for priming wood prior to application of single part varnishes or two component urethane finishes.',
@@ -179,7 +179,7 @@ var seedReviews = function(){
   for (var i = 0; i < 400; i++) {
     var newReview = {
       description: chance.paragraph(),
-      stars: chance.integer({min: 0, max: 5})
+      stars: chance.integer({min: 1, max: 5})
     }
     newReviews.push(newReview)
   }
