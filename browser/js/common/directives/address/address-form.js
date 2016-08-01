@@ -3,7 +3,7 @@
 app.directive('addressForm', function($rootScope, Address){
   return {
     restrict: 'E',
-    templateUrl: 'js/common/directives/address/address.html',
+    templateUrl: 'js/common/directives/address/address-form.html',
     link: function(scope, elem, attrs){
       scope.createAddress = function(information, user){
         Address.createNewAddress(information, user)
