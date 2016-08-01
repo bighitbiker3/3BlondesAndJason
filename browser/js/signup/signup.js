@@ -6,7 +6,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('signUpCtrl', function($scope, User, AuthService, $state, $rootScope, Login){
+app.controller('signUpCtrl', function($scope, User, AuthService, $state, $rootScope, Login, $window){
   $scope.error = null;
 
   $scope.sendSignup = function (signupInfo) {
@@ -24,8 +24,13 @@ app.controller('signUpCtrl', function($scope, User, AuthService, $state, $rootSc
         return AuthService.login({email: signupInfo.email, password: signupInfo.password})
       })
       .then(() => {
-          if ($rootScope.cart) {
-              return Login.persistPseudoCart($rootScope.cart)
+        let cart = {};
+        for(let key in $window.sessionStorage){
+          let obj = JSON.parse($window.sessionStorage[key]);
+          cart[key] = obj;
+        }
+          if (cart) {
+              return Login.persistPseudoCart(cart)
           }
       })
       .then(() => $state.go('home'))
