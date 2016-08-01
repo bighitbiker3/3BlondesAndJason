@@ -5,8 +5,8 @@ app.directive('addressForm', function($rootScope, Address){
     restrict: 'E',
     templateUrl: 'js/common/directives/address/address.html',
     link: function(scope, elem, attrs){
-      scope.createAddress = function(information){
-        Address.createNewAddress(information)
+      scope.createAddress = function(information, user){
+        Address.createNewAddress(information, user)
         .then(address => {
           $rootScope.addresses.push(address);
           scope.information = {};

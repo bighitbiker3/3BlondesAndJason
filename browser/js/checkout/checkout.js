@@ -5,10 +5,10 @@ app.controller('CheckoutCtrl', function($scope, cartItems, Card, Order, me, $roo
     $scope.cartItems = cartItems;
     $scope.me = me;
 
-    if($scope.me.id) Card.getMyCards().then(cards => {$rootScope.cards = cards});
+    if ($scope.me) Card.getMyCards().then(cards => { $rootScope.cards = cards });
     else $rootScope.cards = [];
 
-    if($scope.me.id) Address.getMyAddresses().then(addresses => {$rootScope.addresses = addresses});
+    if ($scope.me) Address.getMyAddresses().then(addresses => { $rootScope.addresses = addresses });
     else $rootScope.addresses = [];
 
 
@@ -16,7 +16,7 @@ app.controller('CheckoutCtrl', function($scope, cartItems, Card, Order, me, $roo
 
     $scope.newOrder = {
         orderSummary: {
-            priceTotal: cartItems.reduce(function(sum, item){
+            priceTotal: cartItems.reduce(function(sum, item) {
                 return sum + (item.product.price) * item.quantity;
             }, 0)
         },
@@ -25,13 +25,14 @@ app.controller('CheckoutCtrl', function($scope, cartItems, Card, Order, me, $roo
         }
     };
 
-    $scope.createOrder = function(order){
+    $scope.createOrder = function(order) {
         Order.createOrderSummary(order.orderSummary)
-        .then(orderSummary => {
-            order.orderDetails.orderSummaryId = orderSummary.id;
-            return Order.createOrderDetails(orderSummary.id, order.orderDetails);
-        })
-        .then($state.go('home'))
+            .then(orderSummary => {
+                order.orderDetails.orderSummaryId = orderSummary.id;
+                order.orderDetails.items.forEach(item => {
+                    item.purchaseCost = item.product.price * item.quantity;
+                }); 
+                return Order.createOrderDetails(order.orderDetails);
+            })
     }
-
 });

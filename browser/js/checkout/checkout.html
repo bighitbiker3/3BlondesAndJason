@@ -23,7 +23,7 @@
                 <td></td>
                 <td></td>
                 <td><strong>Total: </strong></td>
-                <td>${{newOrder.priceTotal}}</td>
+                <td>${{newOrder.orderSummary.priceTotal}}</td>
             </tr>
         </table>
 
@@ -34,9 +34,9 @@
         <div>
             <h2>Choose An Addresses</h2>
             <h3>Choose a billing address</h3>
-            <select ng-model="newOrder.orderSummay.billingAddressId" ng-options="address.id as address.street1 for address in addresses"></select>
+            <select ng-model="newOrder.orderSummary.billingId" ng-options="address.id as address.street1 for address in addresses"></select>
             <h3>Choose a shipping address</h3>
-            <select ng-model="newOrder.orderSummary.shippingAddressId" ng-options="address.id as address.street1 for address in addresses"></select>
+            <select ng-model="newOrder.orderSummary.shippingId" ng-options="address.id as address.street1 for address in addresses"></select>
         </div>
 
         <div>

@@ -34,6 +34,7 @@ router.get('/', ensureAdmin, function(req, res, next){
 
 // Produces a new orderSummary
 router.post('/', function(req, res, next){
+  if(req.user) req.body.userId = req.user.id;
   OrderSummary.create(req.body)
   .then(orderSummary => {
     res.status(201).json(orderSummary);
@@ -119,10 +120,23 @@ router.get('/details', ensureAdmin, function(req, res, next){
 
 // Produces a new orderDetail
 router.post('/details', function(req, res, next){
-  OrderDetail.create(req.body)
-  .then(orderDetail => {
-    res.status(201).json(orderDetail);
-  })
+  var PromiseArr = [];
+
+  req.body.items.forEach(
+    order => { 
+      var newOrder = {};
+
+      newOrder.productId = order.productId;
+      newOrder.quantity = order.quantity;
+      newOrder.purchaseCost = order.purchaseCost;
+      newOrder.orderSummaryId = req.body.orderSummaryId;
+
+      PromiseArr.push(OrderDetail.create(newOrder));
+    }
+  )
+
+  Promise.all(PromiseArr)
+  .then(orderDetails => res.json(orderDetails))
   .catch(next);
 });
 
@@ -144,6 +158,7 @@ router.put('/details/:orderDetailId', ensureAuthenticated, function(req, res, ne
   }
 
 });
+
 
 // Admin Level: Deletes a specific orderDetail
 router.delete('/details/:orderDetailId', ensureAuthenticated, function(req, res, next){

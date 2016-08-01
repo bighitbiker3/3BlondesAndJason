@@ -37,8 +37,9 @@ app.factory('Order', function ($http) {
       .then(res => res.data);
     },
 
-    createOrderDetails: function(orderSummaryId, orderDetails){
-
+    createOrderDetails: function(orderDetails){
+      return $http.post('/api/orders/details', orderDetails)
+      .then(res => res.data);
     }
   }
 })

@@ -67,7 +67,7 @@ router.post('/cards', ensureAuthenticated, function(req, res, next){
   req.dbUser.createCard(req.body)
   .then(card => {
     if(!card) throw new Error('card not created!')
-    return card;
+    res.status(201).json(card);
   })
   .catch(next);
 })
