@@ -5,8 +5,8 @@
     <h1>Order Summary</h1>
     <h3>Order id: {{order.orderSummary.id}}</h3>
     <h4>Date Placed: {{order.orderSummary.createdAt}}</h4>
-    <div class="form-group">
-      <label class="checkbox-inline"><input type="checkbox" ng-model="order.orderSummary.paid"><h4>Paid</h4></label>
+    <div class="checkbox">
+      <label class="paid-checkbox-label"><input type="checkbox" ng-model="order.orderSummary.paid">Paid</label>
     </div>
   </div>
   <div class="well" ng-repeat="orderDetail in order.orderDetails | filter:$root.search.adminSearch">
@@ -20,7 +20,7 @@
     </div>
     <label class="checkbox-inline"><input type="checkbox" ng-model="orderDetail.processed"> Processed</label>
   </div>
-  <button type="submit" class="btn btn-primary">Save</button>
+  <button type="submit" class="btn btn-success">Save</button>
 
   </form>
 

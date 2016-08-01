@@ -1,9 +1,4 @@
-app.controller('adminOrdersCtrl', function($scope, Order, $rootScope){
-
-  $rootScope.$on('searching', function(e, data){
-    $scope.search = data;
-  })
-
+app.controller('adminOrdersCtrl', function($scope, Order){
   Order.getAllOrderSummaries()
   .then(orders => {
     $scope.orders = orders
@@ -11,11 +6,12 @@ app.controller('adminOrdersCtrl', function($scope, Order, $rootScope){
   .catch(error => console.error(error))
 })
 
-app.controller('adminOrderDetailCtrl', function($scope, Order, $stateParams, Address, $state){
+app.controller('adminOrderDetailCtrl', function($scope, Order, $stateParams, Address, $state, $q){
   let orderId = $stateParams.orderId;
   $scope.order = {};
   Order.getOneOrderSummary(orderId)
   .then(orderSummary => {
+    console.log(orderSummary);
     $scope.order.orderSummary = orderSummary
     return Address.getOneAddress(orderSummary.shippingId)
   })
@@ -34,8 +30,13 @@ app.controller('adminOrderDetailCtrl', function($scope, Order, $stateParams, Add
     .then(() => {
       return Promise.all(orderDetails.map(orderDetail => Order.updateOrderDetails(orderDetail.id, orderDetail)))
     })
+    .then(details => {
+      //Now we check if all details are processed to change the master summary 'processed'
+      let processed;
+      details.filter(detail => !detail.processed).length > 0 ? processed = false : processed = true;
+      return Order.updateOneOrderSummary(orderSummary.id, {processed: processed})
+    })
     .then(() => $state.go('admin.orders'))
     .catch(error => console.error(error))
-
   }
 })

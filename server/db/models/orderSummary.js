@@ -2,6 +2,7 @@
 
 var Sequelize = require('sequelize');
 var db = require('../_db');
+var OrderDetail = require('../models/orderDetail');
 
 module.exports = db.define('order_summary', {
   date: {
