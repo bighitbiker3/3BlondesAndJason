@@ -15,6 +15,11 @@ router.get('/:addressId', function(req, res, next){
   .catch(next)
 })
 
+router.post('/', function(req, res, next){
+  Address.create(req.body.newAddress)
+  .then(address => res.status(201).json(address))
+})
+
 router.delete('/:addressId/:userId', function(req, res, next){
   let addressId = req.params.addressId;
   let userId = req.params.userId;

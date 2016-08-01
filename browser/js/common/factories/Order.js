@@ -29,6 +29,17 @@ app.factory('Order', function ($http) {
     getAllOrderDetails: function(orderSummaryId){
       return $http.get('/api/orders/' + orderSummaryId + '/details')
       .then(res => res.data);
+    },
+
+    createOrderSummary: function(orderData) {
+      orderData.priceTotal *= 100;
+      return $http.post('/api/orders', orderData)
+      .then(res => res.data);
+    },
+
+    createOrderDetails: function(orderDetails){
+      return $http.post('/api/orders/details', orderDetails)
+      .then(res => res.data);
     }
   }
 })
