@@ -26,6 +26,10 @@
         </tr>
     </table>
     <button ng-click="showAddress=true" class="btn btn-default">Create new address</button> 
-    <address ng-show="showAddress"></address>
+    <div ng-repeat="address in addresses">
+        <button ng-click="setCurrentShipping(address)">Use this as shipping</button>
+        <button ng-click="setCurrentBilling(address)">Use this as billing</button>
+        <address model="address" ng-show="showAddress"></address>
+    </div>
     <payment></payment>
 </div>
