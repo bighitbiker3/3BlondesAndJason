@@ -1,6 +1,7 @@
 .user-list-admin{
   margin-bottom: 10px;
 }
+
 .admin-nav{
   text-align: center;
 }
@@ -24,4 +25,11 @@
 
 .order-summary-admin-info{
   text-align: center;
+}
+
+.paid-checkbox-label{
+  input{
+    margin-top: 5px;
+  }
+  font-size: 15px;
 }
