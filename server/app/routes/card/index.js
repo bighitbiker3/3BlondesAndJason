@@ -6,9 +6,12 @@ var Card = db.model('card');
 var Product = db.model('product');
 var UserCards = db.model('UserCards');
 var utility = require('../../configure/utility');
+var app = require('../../');
+
 var ensureAdmin = utility.ensureAdmin;
 var ensureAuthenticated = utility.ensureAuthenticated;
-var stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+var stripe = require('stripe')('sk_test_2vR5taxRBxTKNW2eKFOtGehd');
 
 module.exports = router;
 
@@ -50,7 +53,7 @@ router.post('/stripe', ensureAuthenticated, function(req, res, next) {
         if (err) {
             return next(err);
         } else {
-            res.redirect('api/me');
+            res.redirect('/');
         }
     });
 });

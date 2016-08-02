@@ -32,7 +32,7 @@ app.factory('Order', function ($http) {
     },
 
     sendToStripe: function(chargeDetails){
-      return $http.post('/api/stripe', chargeDetails)
+      return $http.post('/api/card/stripe', chargeDetails)
       .then(res => res.data);
     },
 
