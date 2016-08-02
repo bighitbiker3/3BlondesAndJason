@@ -1,0 +1,10 @@
+<form ng-submit="submitReview(review, product.id)">
+  <div class="form-group">
+    <label for="numStars">Select # of stars: </label>
+    <select name="numStars" ng-options="n for n in stars" ng-model="review.stars"></select>
+    <p>Description:
+    <textarea name="description" class="form-control" ng-model="review.description" rows="5" cols="60"></textarea>
+    </p>
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>

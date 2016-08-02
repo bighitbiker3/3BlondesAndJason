@@ -1,11 +1,11 @@
 <div>
   <h1>Hi This is My Cards!</h1>
-  <ul>
-    <li ng-repeat="card in cards">
-      <payment-card model="card"></payment-card>
-    </li>
-  </ul>
+  <payment-card ng-repeat="card in cards" model="card"></payment-card>
 
-  <h2>Create new Card</h2>
-  <card-form user-id="me.id"></card-form>
+  <hr>
+  <div style="clear: both;">
+    <h2>Create new Card</h2>
+    <card-form user-id="me.id"></card-form>
+  </div>
+
 </div>

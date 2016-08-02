@@ -23,7 +23,7 @@
           </button>
         </form>
       </td>
-      <td>{{ (item.quantity * item.product.price) / 100 | currency }}</td>
+      <td>{{ (item.quantity * (item.product.price / 100)) | currency }}</td>
       <td>
         <button class="btn btn-default btn-xs" ng-click="removeItem(item)">
           <span class="glyphicon glyphicon-remove"></span>

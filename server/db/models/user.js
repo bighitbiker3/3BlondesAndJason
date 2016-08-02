@@ -51,7 +51,10 @@ module.exports = db.define('user', {
             return _.omit(this.toJSON(), ['password', 'salt']);
         },
         correctPassword: function (candidatePassword) {
-            return this.Model.encryptPassword(candidatePassword, this.salt) === this.password;
+          return this.Model.encryptPassword(candidatePassword, this.salt) === this.password;
+        },
+        changePassword: function(password){
+          return this.setDataValue('password', this.Model.encryptPassword(password, this.salt))
         }
     },
     classMethods: {
@@ -62,15 +65,22 @@ module.exports = db.define('user', {
             var hash = crypto.createHash('sha1');
             hash.update(plainText);
             hash.update(salt);
-            return hash.digest('hex');
+            let final = hash.digest('hex')
+            return final
         }
     },
     hooks: {
         beforeValidate: function (user) {
-            if (user.changed('password')) {
+            if (user.changed('password') && user.isNewRecord) {
                 user.salt = user.Model.generateSalt();
                 user.password = user.Model.encryptPassword(user.password, user.salt);
             }
+        },
+        beforeUpdate: function(user){
+          if (user.changed('password')) {
+              user.salt = user.Model.generateSalt();
+              user.password = user.Model.encryptPassword(user.password, user.salt);
+          }
         }
     }
 });
