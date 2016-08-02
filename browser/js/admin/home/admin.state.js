@@ -36,7 +36,16 @@ app.config(function ($stateProvider) {
     .state('admin.orders', {
       url: '/orders',
       templateUrl: 'js/admin/orders/orders.admin.html',
-      controller: 'adminOrdersCtrl'
+      controller: 'adminOrdersCtrl',
+      resolve: {
+        orders: function(Order){
+          return Order.getAllOrderSummaries()
+          .then(orders => {
+            return orders
+          })
+          .catch(error => console.error(error))
+        }
+      }
     })
     .state('admin.orderDetail', {
       url: '/orders/:orderId',
