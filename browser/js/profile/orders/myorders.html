@@ -1,8 +1,4 @@
 <div>
   <h1>Hi This is My Orders!</h1>
-  <ul>
-    <li ng-repeat="orderSummary in orderSummaries">
-      <order-summary model="orderSummary"></order-summary>
-    </li>
-  </ul>
+  <order-summary ng-repeat="orderSummary in orderSummaries" model="orderSummary"></order-summary>
 </div>

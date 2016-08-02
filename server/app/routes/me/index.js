@@ -4,9 +4,12 @@ var db = require('../../../db');
 var User = db.model('user');
 var CartProducts = db.model('cart_products');
 var Product = db.model('product');
+var Address = db.model('address')
 var Card = db.model('card');
 var UserAddresses = db.model('user_addresses');
 var utility = require('../../configure/utility');
+var ntc = utility.ntc;
+ntc.init();
 var ensureAdmin = utility.ensureAdmin;
 var ensureAuthenticated = utility.ensureAuthenticated;
 module.exports = router;
@@ -30,29 +33,45 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
 
 //GET ALL THE ORDER SUMMARIES
 router.get('/orders', ensureAuthenticated, function(req, res, next) {
-    req.dbUser.getUserOrders()
-        .then(orders => {
-            res.send(orders)
-        })
-        .catch(next)
+  req.dbUser.getUserOrders({
+    include: [{
+      model: Address,
+      as: 'shipping'
+    }, {
+      model: Address,
+      as: 'billing'
+    }]
+  })
+  .then(orders => {
+    res.send(orders)
+  })
+  .catch(next)
 })
 
 //GET THE ORDER DETAILS OF A SPECIFIC ORDER SUMMARY
 router.get('/orders/:id', ensureAuthenticated, function(req, res, next) {
-    let orderId = req.params.id
-    req.dbUser.getUserOrders({
-            where: {
-                id: orderId
-            }
-        })
-        .then(order => {
-            if (order.length === 0) throw new Error('no order summary found')
-            return order[0].getItems()
-        })
-        .then(orderDetails => {
-            res.send(orderDetails)
-        })
-        .catch(next)
+  let orderId = req.params.id
+  req.dbUser.getUserOrders({
+    where: {
+      id: orderId
+    }
+  })
+  .then(order => {
+    if(order.length === 0) throw new Error('no order summary found')
+    return order[0].getItems({
+      include: [Product]
+    })
+  })
+  .then(orderDetails => {
+
+    orderDetails = orderDetails.map(function(orderDetail){
+      orderDetail.dataValues.product.dataValues.colorName = ntc.name(orderDetail.product.color)[1];
+      return orderDetail;
+    })
+
+    res.send(orderDetails)
+  })
+  .catch(next)
 })
 
 // GET CARDS FOR USER
@@ -196,7 +215,7 @@ router.delete('/cart/:productId', ensureAuthenticated, function(req, res, next) 
         .catch(next)
 })
 
-//DELETE ALL ITEMS IN CART 
+//DELETE ALL ITEMS IN CART
 router.delete('/cart', function(req, res, next) {
     req.dbUser.getCart()
         .then(cart => {
