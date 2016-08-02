@@ -28,11 +28,12 @@ router.get('/resetPassword', function(req, res, next){
 
 router.put('/resetPassword', function(req, res, next){
   let email = req.body.email;
-  let password = req.body.password;
+  let passwordToChange = req.body.password;
+  console.log(passwordToChange, '--------------password to change');
   User.findOne({where:{email: email}})
   .then(user => {
-    console.log(user);
-    return user.update({password: password})
+    console.log('==================================================== user update below');
+    return user.update({password: passwordToChange})
   })
   .then(updatedUser => {
     console.log(updatedUser);
