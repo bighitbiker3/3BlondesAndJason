@@ -95,7 +95,6 @@ router.post('/addresses', ensureAuthenticated, function(req, res, next) {
     })
   })
   .then(rowInstance => {
-    console.log(rowInstance);
     if(req.body.options) return rowInstance.update(req.body.options);
     else return;
   })

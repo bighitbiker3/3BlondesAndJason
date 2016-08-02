@@ -39,7 +39,6 @@ app.controller('resetCtrl', function($scope, $stateParams, ResetPassword, User){
   $scope.error = null;
 
   $scope.resetPassword = function(password){
-    console.log(password, '---------------this is password in resetctrl');
     ResetPassword.checkHashRoute(hashId)
     .then(email => {
       if(email){

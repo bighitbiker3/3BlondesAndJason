@@ -6,7 +6,6 @@ app.directive('payment', function($rootScope, AuthService, AUTH_EVENTS, $state) 
         templateUrl: 'js/common/directives/checkout/payment.html',
         link: function(scope) {
             scope.submitPayment = function(checkout) {
-                console.log('processing payment', $scope.newOrder)
                 //we must add createPayment to the order factory
                 order.createPayment($scope.newOrder)
                     .then(function() {

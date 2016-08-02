@@ -10,7 +10,6 @@ setInterval(function(){
   for(var key in hashStore){
     if(hashStore[key].expire < Date.now()) delete hashStore[key]
   }
-  console.log(hashStore);
 }, 9000);
 
 hashMethods.createHash = function(email){
@@ -23,7 +22,6 @@ hashMethods.store = function(){
 
 hashMethods.addUserHash = function(email){
   hashStore[hashMethods.createHash(email)] = {email: email, expire: Date.now() + 100000 }
-  console.log(hashMethods.store(), 'in hasher*******');
   return hashMethods.createHash(email)
 }
 

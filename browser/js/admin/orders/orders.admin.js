@@ -11,7 +11,6 @@ app.controller('adminOrderDetailCtrl', function($scope, Order, $stateParams, Add
   $scope.order = {};
   Order.getOneOrderSummary(orderId)
   .then(orderSummary => {
-    console.log(orderSummary);
     $scope.order.orderSummary = orderSummary
     return Address.getOneAddress(orderSummary.shippingId)
   })
