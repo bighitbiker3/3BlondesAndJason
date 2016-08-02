@@ -1,5 +1,4 @@
 app.controller('ProductDetailCtrl', function ($scope, product, productReviews, ReviewFactory) {
-  console.log(productReviews);
   $scope.viewReviews = false;
   $scope.addReview = false;
   $scope.product = product;

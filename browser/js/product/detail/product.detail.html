@@ -3,9 +3,9 @@
 </div>
 <div class="col-md-6">
   <h1>{{ product.name }}</h1>
-  <h2>{{ product.price | currency }}</h2>
+  <h2>{{ product.price / 100 | currency }}</h2>
   <h5>Color: <span style="color: {{ product.color }}">{{ product.colorName }}</span></h5>
-  <add-to-cart model="product.id"></add-to-cart>
+  <add-to-cart model="product"></add-to-cart>
   <span class="reviewOptions">
     <a ng-click="addReview = !addReview">Add a Review!</a>
     <a ng-click="viewReviews = !viewReviews">view reviews</a>
