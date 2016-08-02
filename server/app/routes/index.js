@@ -7,6 +7,7 @@ router.use('/orders', require('./orders'));
 router.use('/users', require('./users'));
 router.use('/me', require('./me'));
 router.use('/address', require('./address'));
+router.use('/card', require('./card'));
 router.use('/reviews', require('./reviews'));
 
 // Make sure this is after all of

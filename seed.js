@@ -25,6 +25,7 @@ var Address = db.model('address');
 var Review = db.model('review');
 var OrderSummary = db.model('order_summary');
 var OrderDetail = db.model('order_detail');
+var Card = db.model('card');
 
 var Promise = require('sequelize').Promise;
 var chance = new require('chance')();
@@ -36,6 +37,7 @@ var postValidationReviews;
 var postValidationOrderSummaries;
 var postValidationAddresses;
 var postValidationOrderDetails;
+var postValidationCards;
 
 // RAND photoUrl, description and product name
 
@@ -147,6 +149,26 @@ var seedAddresses = function(){
 
   return Promise.all(creatingAddresses)
 };
+
+var seedCards = function(){
+  var newCards = [];
+  for (var i = 0; i < 300; i++) {
+    var newCard = {
+      number: chance.cc().toString(),
+      type: chance.cc_type(),
+      cvc: '999',
+      name: chance.name(),
+      exp_month: 12,
+      exp_year: 17
+    }
+    newCards.push(newCard)
+  }
+  var creatingCards = newCards.map(function(card){
+    return Card.create(card)
+  });
+
+  return Promise.all(creatingCards)
+}
 
 //SEED PRODUCTS
 var seedProducts = function(){
@@ -281,6 +303,18 @@ db.sync({ force: true })
       })
 
       return Promise.all(addingUsersToOrderSummaries);
+
+    })
+    .then(() => seedCards())
+    .then(cards => {
+      postValidationCards = cards.slice();
+      var addCardsToUsers = [];
+
+      cards.forEach(card => {
+        addCardsToUsers.push(chance.pickone(postValidationUsers).addCard(cards.pop()));
+      })
+
+      return Promise.all(addCardsToUsers);
 
     })
     .then(() => {

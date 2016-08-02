@@ -5,7 +5,7 @@
     applications environment, along with NODE_ENV=production
 
  */
-
+;
 module.exports = {
     "DATABASE_URI": process.env.DATABASE_URI,
     "SESSION_SECRET": process.env.SESSION_SECRET,
