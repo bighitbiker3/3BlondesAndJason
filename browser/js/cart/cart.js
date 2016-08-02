@@ -67,6 +67,12 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
 
   $scope.cartItems = cartItems;
 
+  function getTotal (items) {
+    return _.sum(items.map(item => item.product.price * item.quantity));
+  }
+
+  $scope.total = getTotal($scope.cartItems);
+
   $scope.edit = false;
 
   $scope.removeItem = function (item) {
@@ -75,6 +81,7 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
       if (!user) {
         $window.sessionStorage.removeItem(item.id)
         $scope.cartItems = Cart.fetchNotLoggedInItems();
+        $scope.total = getTotal($scope.cartItems);
       }
       else return Cart.removeItem(item.product.id)
     })
@@ -82,6 +89,7 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
       if (args[0]) {
         let idx = $scope.cartItems.indexOf(item);
         $scope.cartItems.splice(idx, 1);
+        $scope.total = getTotal($scope.cartItems);
       }
     })
   }
@@ -98,6 +106,7 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
 					thisArr[1] = newNum;
 					userSession.setItem([item.id], JSON.stringify([item.product, thisArr[1]]))
           $scope.cartItems = Cart.fetchNotLoggedInItems();
+          $scope.total = getTotal($scope.cartItems);
         }
         else {
           return Cart.updateQuantity(newNum, item)
@@ -107,6 +116,7 @@ app.controller('CartCtrl', function ($scope, cartItems, Cart, AuthService, $root
         if (args[0]) {
           let idx = $scope.cartItems.indexOf(item)
           $scope.cartItems[idx].quantity = args[0].quantity;
+          $scope.total = getTotal($scope.cartItems);
         }
       })
     }

@@ -1,8 +1,6 @@
-<div>
+<div class="cartBox">
 
-  <h1>Cart</h1>
-
-  <table class='table'>
+  <table class='table' >
     <tr>
       <th>Product</th>
       <th>Price</th>
@@ -12,20 +10,20 @@
     </tr>
     <tr ng-repeat="item in cartItems">
       <td>{{ item.product.name }}</td>
-      <td>{{ item.product.price }}</td>
+      <td>{{ item.product.price / 100 | currency }}</td>
       <td>
         <span ng-hide="edit">{{ item.quantity }}</span>
         <button ng-hide="edit" class="btn btn-default btn-xs" ng-click="editView()">
           <span class="glyphicon glyphicon-pencil"></span>
         </button>
         <form ng-show="edit" ng-submit="editQuantity(update.quantity, item)">
-          <input ng-model="update.quantity" type="number">
+          <input ng-value="item.quantity" ng-model="update.quantity" type="number">
           <button ng-show="edit" class="btn btn-default btn-xs" type="submit">
             <span class="glyphicon glyphicon-ok"></span>
           </button>
         </form>
       </td>
-      <td>{{ item.quantity * item.product.price }}</td>
+      <td>{{ (item.quantity * item.product.price) / 100 | currency }}</td>
       <td>
         <button class="btn btn-default btn-xs" ng-click="removeItem(item)">
           <span class="glyphicon glyphicon-remove"></span>
@@ -33,9 +31,10 @@
       </td>
     </tr>
   </table>
+  <h3 class="total">{{ total / 100 | currency }}</h3>
   <div class="checkCont">
     <button class="btn btn-default btn-lg" class="checkoutBtn" ui-sref="checkout">
-      <span class="glyphicon glyphicon-shopping-cart"><p>Checkout</p></span>
+      <span class="glyphicon glyphicon-shopping-cart"><p>  Checkout</p></span>
     </button>
   </div>
 </div>
