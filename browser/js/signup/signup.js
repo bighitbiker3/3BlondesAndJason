@@ -6,7 +6,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('signUpCtrl', function($scope, User, AuthService, $state, $rootScope, Login, $window){
+app.controller('signUpCtrl', function($scope, User, AuthService, $state, $rootScope, Login, $window, Mailer){
   $scope.error = null;
 
   $scope.sendSignup = function (signupInfo) {
@@ -33,6 +33,7 @@ app.controller('signUpCtrl', function($scope, User, AuthService, $state, $rootSc
               return Login.persistPseudoCart(cart)
           }
       })
+      .then(() =>  Mailer.sendWelcomeMessage(signupInfo))
       .then(() => $state.go('home'))
       .catch(function (err) {
         $scope.error = 'There was an error. Error 432052. Please contact Payton';

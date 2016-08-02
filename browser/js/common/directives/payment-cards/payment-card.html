@@ -1,3 +1,7 @@
-<div>
-  <pre>{{ card | json }}</pre>
+<div class="payment-div">
+  <h4>Name: {{ card.name }}</h4>
+  <h4>Number: {{ card.number }}</h4>
+  <h4>Expiration Month: {{ card.exp_month }}</h4>
+  <h4>Expiration Month: {{ card.exp_year }}</h4>
+  <h4>CVC: {{ card.cvc }}</h4>
 </div>

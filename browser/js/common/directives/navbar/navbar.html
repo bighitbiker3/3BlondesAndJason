@@ -1,6 +1,6 @@
 <nav class="navbar navbar-static-top">
     <div class="container">
-        <div class="navbar-header">
+        <div ui-sref="home" class="navbar-header">
             <fullstack-logo></fullstack-logo>
         </div>
         <ul class="nav navbar-nav">
@@ -13,10 +13,15 @@
         </ul>
         <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
         <button ng-show="!user" ui-sref="signup" class="btn login-button">Signup</button>
-        <i ui-sref="cart" class='fa fa-shopping-cart fa-2x shopping-cart'></i>
-        <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.firstName }}!</span>
-            <a ng-click="logout()">Logout</a>
+        <div class="right-nav">
+          <i ui-sref="cart" class='fa fa-shopping-cart fa-2x shopping-cart'></i>
+          <div ng-show="user" class="welcome">
+              <span ui-sref="profile">Welcome, {{ user.firstName }}!</span>
+              <a class="checkout-nav" ui-sref="checkout">Checkout</a>
+              <a ng-click="logout()">Logout</a>
+
+          </div>
         </div>
+
     </div>
 </nav>

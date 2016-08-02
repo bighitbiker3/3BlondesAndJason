@@ -3,6 +3,6 @@
   <h4>{{ product.name }}</h4>
   <h5>Color: <span style="color: {{ product.color }}">{{ product.colorName }}</span></h5>
   <h6>{{ product.description }}...</h6>
-  <h5>$ {{ product.price }}</h6>
+  <h5>{{ product.price / 100 | currency }}</h6>
   <add-to-cart model="product"></add-to-cart>
 </div>

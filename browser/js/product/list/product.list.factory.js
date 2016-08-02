@@ -3,6 +3,7 @@ app.factory('ProductListFactory', function($window, $http, AuthService, $rootSco
 	var ProductListFactory = {};
 
 	ProductListFactory.addProduct = function(product, quantity) {
+    console.log('----------Here--------', product);
     $rootScope.cart = $rootScope.cart || {};
     return AuthService.getLoggedInUser()
     .then(user => {

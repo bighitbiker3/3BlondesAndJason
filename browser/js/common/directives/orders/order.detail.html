@@ -1,4 +1,10 @@
-<div>
-  <p>Order Detail</p>
-  <pre>{{ orderDetail | json }}</pre>
+<div class="order-detail-div">
+  <img src="{{ orderDetail.product.photoUrl }}">
+  <div class="order-detail-data">
+    <h4>Product Name: {{ orderDetail.quantity}}</h4>
+    <h5>Color: <span style="color: {{ orderDetail.product.color }}">{{ orderDetail.product.colorName }}</span></h5>
+    <h4>Purchased Cost: ${{ orderDetail.product.price / 100 }}</h4>
+    <h4>Total Cost: ${{ orderDetail. purchaseCost }}</h4>
+    <h4>Quantity: {{ orderDetail.quantity}}</h4>
+  </div>
 </div>

@@ -1,0 +1,15 @@
+<form ng-show="!passwordResetComplete" ng-submit="resetPassword(password)">
+
+    <alert type="danger" ng-show="error">
+        {{ error }}
+    </alert>
+    <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" ng-model="password" class="form-control" id="login-password" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+<div ng-show="passwordResetComplete" class="forgot-password-confirm well">
+  <h5>Password reset! Please <a ui-sref="login">login</a> with your new password :) </h5>
+</div>
