@@ -10,6 +10,7 @@ app.directive('orderSummary', function(Order, AuthService, $rootScope){
     link: function (scope, elem, attrs) {
       scope.details = {};
       scope.show = {};
+      scope.orderSummary.priceTotal = scope.orderSummary.priceTotal / 100;
 
       function getOrderDetails(id){
         if(scope.details[id]) scope.show[id] = true;
