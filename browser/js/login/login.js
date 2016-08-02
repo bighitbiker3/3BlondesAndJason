@@ -24,7 +24,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('LoginCtrl', function ($scope, AuthService, $state, $rootScope, Login) {
+app.controller('LoginCtrl', function ($scope, AuthService, $state, $rootScope, Login, ResetPassword) {
 
     $scope.login = {};
     $scope.error = null;
@@ -45,8 +45,6 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state, $rootScope, L
         .catch(function () {
             $scope.error = 'Invalid login credentials.';
         });
-
-
     };
 
 });

@@ -103,6 +103,26 @@ router.get('/addresses', ensureAuthenticated, function(req, res, next) {
 
 //POST ADDRESS FOR USER
 router.post('/addresses', ensureAuthenticated, function(req, res, next) {
+<<<<<<< HEAD
+  req.dbUser.createAddress(req.body.newAddress)
+  .then(address => {
+    if(!address) throw new Error('address not created!');
+    return UserAddresses.findOne({
+      where: {
+        addressId: address.id,
+        userId: req.dbUser.id
+      }
+    })
+  })
+  .then(rowInstance => {
+    if(req.body.options) return rowInstance.update(req.body.options);
+    else return;
+  })
+  .then(() => {
+    res.status(201).send(req.body.newAddress);
+  })
+  .catch(next);
+=======
     req.dbUser.createAddress(req.body.newAddress)
         .then(address => {
             if (!address) throw new Error('address not created!');
@@ -122,6 +142,7 @@ router.post('/addresses', ensureAuthenticated, function(req, res, next) {
             res.status(201).send(req.body.newAddress);
         })
         .catch(next);
+>>>>>>> master
 })
 
 //GET CART
