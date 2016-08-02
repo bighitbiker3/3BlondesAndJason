@@ -15,7 +15,6 @@ app.factory('ProductListFactory', function($window, $http, AuthService, $rootSco
 				} else{
 					userSession.setItem([product.id], JSON.stringify([product, quantity]))
 				}
-
       }
       else {
         return $http.post('/api/me/cart/' + product.id, {quantity: quantity})
