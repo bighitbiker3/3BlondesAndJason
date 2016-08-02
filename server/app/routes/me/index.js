@@ -3,7 +3,8 @@ var router = require('express').Router();
 var db = require('../../../db');
 var User = db.model('user');
 var CartProducts = db.model('cart_products');
-var Product = db.model('product')
+var Product = db.model('product');
+var Card = db.model('card');
 var UserAddresses = db.model('user_addresses');
 var utility = require('../../configure/utility');
 var ensureAdmin = utility.ensureAdmin;
@@ -54,6 +55,24 @@ router.get('/orders/:id', ensureAuthenticated, function(req, res, next) {
   .catch(next)
 })
 
+// GET CARDS FOR USER
+router.get('/cards', ensureAuthenticated, function(req,res, next){
+  req.dbUser.getCards()
+  .then(cards => res.send(cards))
+  .catch(next);
+})
+
+//POST CARD FOR USER
+router.post('/cards', ensureAuthenticated, function(req, res, next){
+  req.dbUser.createCard(req.body)
+  .then(card => {
+    if(!card) throw new Error('card not created!')
+    res.status(201).json(card);
+  })
+  .catch(next);
+})
+
+
 //GET ADDRESSES FOR USER
 router.get('/addresses', ensureAuthenticated, function(req, res, next) {
   req.dbUser.getAddresses()
@@ -65,10 +84,9 @@ router.get('/addresses', ensureAuthenticated, function(req, res, next) {
 
 //POST ADDRESS FOR USER
 router.post('/addresses', ensureAuthenticated, function(req, res, next) {
-  console.log(req.body);
   req.dbUser.createAddress(req.body.newAddress)
   .then(address => {
-    if(!address) throw new Error('not created!');
+    if(!address) throw new Error('address not created!');
     return UserAddresses.findOne({
       where: {
         addressId: address.id,

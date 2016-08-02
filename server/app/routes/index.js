@@ -7,8 +7,7 @@ router.use('/orders', require('./orders'));
 router.use('/users', require('./users'));
 router.use('/me', require('./me'));
 router.use('/address', require('./address'));
-router.use('/mailer', require('./mailer'));
-router.use('/password', require('./password'));
+router.use('/card', require('./card'));
 
 // Make sure this is after all of
 // the registered routes!
