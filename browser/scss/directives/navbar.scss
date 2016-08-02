@@ -2,13 +2,19 @@ navbar {
 
   display: block;
   background: white;
-  border-bottom: 1px solid black;
-  box-shadow: 1px 1px 14px -3px black;
+  margin-bottom: 0px;
+
 
   .container {
     width: 91%;
     max-width: 1340px;
-    padding-top: 20px;
+    padding-top: 15px;
+  }
+  .navbar {
+    background: white;
+  }
+  .navbar-header{
+    cursor: pointer;
   }
 
   fullstack-logo {
@@ -51,7 +57,7 @@ navbar {
   }
 
   .shopping-cart {
-    float: right;
+    text-align: right;
     margin-right: 10px;
     margin-top: 10px;
     &:hover {
@@ -59,10 +65,14 @@ navbar {
       cursor: pointer;
     }
   }
+  .right-nav{
+    float: right;
+  }
 
   .welcome {
     float: right;
     margin-top: 12px;
+    cursor: pointer;
     span {
       color: black;
       font-size: 16px;
@@ -71,6 +81,11 @@ navbar {
     a {
       color: #f30046;
       cursor: pointer;
+    }
+    .checkout-nav{
+      font-size: 14px;
+      color: black;
+      padding-right: 5px;
     }
   }
 }
