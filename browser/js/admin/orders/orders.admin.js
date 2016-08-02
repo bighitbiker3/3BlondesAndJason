@@ -1,9 +1,5 @@
-app.controller('adminOrdersCtrl', function($scope, Order){
-  Order.getAllOrderSummaries()
-  .then(orders => {
-    $scope.orders = orders
-  })
-  .catch(error => console.error(error))
+app.controller('adminOrdersCtrl', function($scope, orders){
+  $scope.orders = orders
 })
 
 app.controller('adminOrderDetailCtrl', function($scope, Order, $stateParams, Address, $state, $q){

@@ -1,0 +1,25 @@
+order-summary {
+  text-align: center;
+  clear: both;
+  .order-div {
+    padding: 1em;
+    border: 1px solid gray;
+    h4, h5 {
+      display: inline;
+      margin: 1em;
+    }
+  }
+
+  order-detail {
+    .order-detail-div {
+      border: 1px solid gray;
+      clear: both;
+      padding: 2em;
+      img {
+        width: auto;
+        height: 100px;
+        float: left;
+      }
+    }
+  }
+}

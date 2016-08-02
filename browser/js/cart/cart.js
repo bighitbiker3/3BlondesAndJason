@@ -26,6 +26,14 @@ app.factory('Cart', function ($http, AuthService, $rootScope, $state, $window) {
     .then(res => res.data);
   }
 
+  CartFactory.clearCartUser = function(userId){
+    return $http.delete('/api/me/cart/')
+  }
+
+  CartFactory.clearCartVisitor = function(){
+    return $window.sessionStorage.clear();
+  }
+
   CartFactory.fetchNotLoggedInItems = function () {
     let toSend = [];
     for(let key in $window.sessionStorage){

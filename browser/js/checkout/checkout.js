@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('CheckoutCtrl', function($scope, cartItems, Card, Order, me, $rootScope, Address) {
+app.controller('CheckoutCtrl', function($scope, cartItems, AuthService, Card, Cart, Order, me, $rootScope, Address) {
 
     $scope.cartItems = cartItems;
     $scope.me = me;
@@ -31,8 +31,14 @@ app.controller('CheckoutCtrl', function($scope, cartItems, Card, Order, me, $roo
                 order.orderDetails.orderSummaryId = orderSummary.id;
                 order.orderDetails.items.forEach(item => {
                     item.purchaseCost = item.product.price * item.quantity;
-                }); 
+                });
                 return Order.createOrderDetails(order.orderDetails);
+            })
+            .then(() => {
+                var user = AuthService.getLoggedInUser();
+                $scope.cartItems = {};
+                if(user) { Cart.clearCartUser() 
+                } else { Cart.clearCartVisitor() }
             })
     }
 });

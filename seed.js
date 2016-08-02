@@ -201,7 +201,7 @@ var seedReviews = function(){
   for (var i = 0; i < 400; i++) {
     var newReview = {
       description: chance.paragraph(),
-      stars: chance.integer({min: 0, max: 5})
+      stars: chance.integer({min: 1, max: 5})
     }
     newReviews.push(newReview)
   }
