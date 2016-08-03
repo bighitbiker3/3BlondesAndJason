@@ -66,6 +66,6 @@ app.controller('CheckoutCtrl', function($scope, cartItems, AuthService, Card, Ca
                 $scope.user = userLoggedIn;
                 return Stripe.card.createToken($form, responseHandler)
             })
-            .catch(console.log);
+            .catch(error => console.log(error));
     }
 });
