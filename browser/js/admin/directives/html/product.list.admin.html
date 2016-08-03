@@ -1,9 +1,8 @@
 <div class="col-md-3">
   <button ui-sref="admin.productDetail({productId: {{product.id}}})" class="btn btn-warning right">Edit</button>
-  <img ng-src="{{ product.photoUrl }}">
-  <h5>{{ product.name }}</h5>
-  <h6>{{ product.price }}</h6>
-  <h6>{{ product.inventory }}</h6>
-  <h6>{{ product.description }}</h6>
-  <h6>{{ product.color }}</h6>
+  <img class="img-thumbnail" ng-src="{{ product.photoUrl }}">
+  <h4>{{ product.name }}</h4>
+  <h5>Color: <span style="color: {{ product.color }}">{{ product.colorName }}</span></h5>
+  <h6>{{ product.description }}...</h6>
+  <h5>{{ product.price / 100 | currency }}</h6>
 </div>
