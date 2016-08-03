@@ -49,7 +49,7 @@ describe('Product model', function () {
           return Review.create({description: 'Baller', stars: 5});
         })
         .then(review => {
-          return testProduct.addProductReview(review);
+          return testProduct.addUserReview(review);
         })
         .then(product => {
           testProduct = product;
@@ -58,16 +58,16 @@ describe('Product model', function () {
       });
 
       it('should have a getproductreviews method', function (done) {
-          expect(testProduct.getProductReviews).to.be.a('function');
+          expect(testProduct.getUserReview).to.be.a('function');
           done();
       });
 
       it('should have an addProductReviews method', function(done) {
-        expect(testProduct.addProductReviews).to.be.a('function');
+        expect(testProduct.addUserReview).to.be.a('function');
         done();
       });
 
-      it('review should have 5 stars biyotch!', function(done) {
+      it('review should have 5 stars!', function(done) {
         return testProduct.getProductReviews()
           .then(reviews => {
             expect(reviews[0].stars).to.equal(5);

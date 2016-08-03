@@ -27,7 +27,6 @@ app.controller('CheckoutCtrl', function($scope, cartItems, AuthService, Card, Ca
             console.error(response.error.message);
         } else {
             var chargeDetails = {};
-            chargeDetails.source = response.id;
             chargeDetails.stripeToken = response.id;
             chargeDetails.userId = $scope.user.id;
             chargeDetails.amount = $scope.newOrder.orderSummary.priceTotal;
