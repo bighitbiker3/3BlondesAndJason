@@ -27,21 +27,21 @@
             </tr>
         </table>
 
-        <button ng-click="showAddressForm=true" class="btn btn-primary">Add New Address</button>
+        <button type="button" ng-click="showAddressForm=true" class="btn btn-primary">Add New Address</button>
 
-        <button ng-click="showCardForm=true" class="btn btn-primary">Add New Card</button>
+        <button type="button" ng-click="showCardForm=true" class="btn btn-primary">Add New Card</button>
 
         <div>
             <h2>Choose An Addresses</h2>
             <h3>Choose a billing address</h3>
-            <select ng-model="newOrder.orderSummary.billingId" ng-options="address.id as address.street1 for address in addresses"></select>
+            <select required ng-model="newOrder.orderSummary.billingId" ng-options="address.id as address.street1 for address in addresses"></select>
             <h3>Choose a shipping address</h3>
-            <select ng-model="newOrder.orderSummary.shippingId" ng-options="address.id as address.street1 for address in addresses"></select>
+            <select required ng-model="newOrder.orderSummary.shippingId" ng-options="address.id as address.street1 for address in addresses"></select>
         </div>
 
         <div>
             <h2>Choose Your Payment</h2>
-            <select ng-model="newOrder.orderSummary.cardId" ng-options="card.id as card.number for card in cards"></select>
+            <select required ng-model="newOrder.card" ng-options="card as card.number for card in cards"></select>
         </div>
 
         <button type="submit" class="btn btn-default">Submit Your Order</button>

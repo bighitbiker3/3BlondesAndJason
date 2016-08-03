@@ -31,6 +31,11 @@ app.factory('Order', function ($http) {
       .then(res => res.data);
     },
 
+    sendToStripe: function(chargeDetails){
+      return $http.post('/api/card/stripe', chargeDetails)
+      .then(res => res.data);
+    },
+
     createOrderSummary: function(orderData) {
       orderData.priceTotal *= 100;
       return $http.post('/api/orders', orderData)

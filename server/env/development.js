@@ -16,5 +16,8 @@ module.exports = {
     "clientSecret": "INSERT_GOOGLE_CLIENT_SECRET_HERE",
     "callbackURL": "INSERT_GOOGLE_CALLBACK_HERE"
   },
+  "STRIPE": {
+    "STRIPE_SECRET_KEY" : "sk_test_2vR5taxRBxTKNW2eKFOtGehd"
+  },
   "LOGGING": false
 };
